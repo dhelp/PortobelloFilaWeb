@@ -1,0 +1,82 @@
+
+
+
+.mesa-content {
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto; 
+}
+
+h1 {
+    size: 50px;
+    color: black;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+button {
+    height: 45px;
+    width: 100%;
+    display: inline-block;
+    text-decoration: none ;
+    background-color: cornflowerblue;
+    border: 0;
+    transition: 0.2s;
+    border-radius: 0.2em;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+}
+
+button:hover{
+    filter: brightness(90%);
+}
+
+.mesa-content .cadastro {
+    width: 300px;
+     margin-top: 25px ;
+    margin-bottom: 25px ;
+    position:relative;  
+    display: block;
+
+}
+
+.mesa-content .cadastro .row label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+.mesa-content .cadastro input{
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    height: 45px;
+}
+
+.listagem{
+    margin-top: 25px;
+    list-style:none;
+    
+}
+
+.mesa-content .cadastro .row{
+    margin-top: 10px;
+}
+
+.listagem ul {
+    display: grid;
+}
+
+.listagem ul li{
+    list-style-type: none;
+    
+}
+
+
+
+
+
+
+
