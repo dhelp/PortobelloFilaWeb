@@ -1,26 +1,21 @@
 
 
 
-.mesa-content {
-    width: 100%;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 0 auto; 
-}
+
 
 h1 {
-    size: 50px;
+    font-size: 25px;
     color: black;
     margin-top: 25px;
     margin-bottom: 25px;
 }
 
-button {
+.buttonsalvar {
+    position: relative;
     height: 45px;
     width: 100%;
     display: inline-block;
     text-decoration: none ;
-    background-color: cornflowerblue;
     border: 0;
     transition: 0.2s;
     border-radius: 0.2em;
@@ -28,13 +23,14 @@ button {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 5px;
+    text-align: center;
 }
 
-button:hover{
+.buttonsalvar:hover{
     filter: brightness(90%);
 }
 
-.mesa-content .cadastro {
+.cadastro {
     width: 300px;
      margin-top: 25px ;
     margin-bottom: 25px ;
@@ -74,6 +70,11 @@ button:hover{
     
 }
 
+
+
+.buttonAcao {
+    text-align: center
+}
 
 
 
