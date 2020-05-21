@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
+
+import BootstrapTable from 'react-bootstrap-table-next';
 
 
-//import DataGrid from 'react-data-grid';
+
 
 import Button01 from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
 
@@ -30,8 +34,47 @@ export default function Mesa() {
     const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
 
+    console.log(listaMesa);
+    const products = listaMesa;
+    const columns = [ {
+        text: 'AÇÃO',
+        formatter: (cell, row, rowIndex, extraData) => (
+            <div>
+                <Link to={`/mesa/show/${row.id}`}>
+              <Button01  className="buttonAcao"
+                                        startIcon={<EditOutlined/>}
+                                        item={row.id}
+                                        
+                                    ></Button01>
+                                    </Link>
 
 
+                        
+                                    <Button01 className="buttonAcao"
+                                    startIcon={<DeleteOutline/>}
+                                    item={row.id}
+                                    onClick={() => handleClick(row.id)}
+                                    >   </Button01>
+
+            </div>
+          ),
+          headerStyle: (column, colIndex) => {
+            return { width: '13%',  }; 
+        },
+        align:'center'
+      },{
+      dataField: 'id',
+      text: 'ID',
+      hidden:true
+    }, {
+      dataField: 'mesa',
+      text: 'MESA',
+      sort: true
+    }, {
+      dataField: 'ramal',
+      text: 'RAMAL',
+      sort: true
+    }];
 
 
   async  function recall() {
@@ -40,16 +83,12 @@ export default function Mesa() {
        await api.get('mesa').then(
             response => {
                 setaListaMesa(response.data)
-
             }
         )
     }
 
 
-    function editar(){
 
-
-    }
 
 
     async function handMesa(e) {
@@ -61,7 +100,7 @@ export default function Mesa() {
             setMesa('');
             setRamal('');
             recall();
-            alert("Mesa cadastrada com sucesso");
+            //alert("Mesa cadastrada com sucesso");
 
 
         } else if (res.status === 200) {
@@ -71,7 +110,7 @@ export default function Mesa() {
 
     async function handleClick(e) {
         //e.preventDefault();
-        await api.delete(`mesa/${e}`);
+        await api.delete(`mesa/delete/${e}`);
         recall();
         
     }
@@ -89,107 +128,30 @@ export default function Mesa() {
    
 
     return (
-        <Container fluid>
 
-            <h1>Cadastro de Mesas e Ramal</h1>
+        
+        <Container fluid>
+            <h1>Listagem de Mesas e Ramal</h1>
 
            
             <hr />
 
-
-
-
-
-            <Form className="cadastro" onSubmit={handMesa}>
-                <Row>
-                    <Col>
-                    <Form.Group controlId="formGroupEmail">
-                            
-                            <Form.Control
-                                type="text"
-                                placeholder="id"
-                                
-                                hidden
-                                />
-                        </Form.Group>
-                        <Form.Group controlId="formGroupEmail">
-                            <Form.Label>MESA</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Informe o nome/número da mesa"
-                                value={mesa}
-                                onChange={e => setMesa(e.target.value)} />
-                        </Form.Group>
-
-                        <Form.Group controlId="formGroupPassword">
-                            <Form.Label>RAMAL</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Informe o ramal da mesa"
-                                value={ramal}
-                                onChange={e => setRamal(e.target.value)} />
-                        </Form.Group>
-
-                        <Form.Group controlId="formGroupButton">
-                            <Form.Label></Form.Label>
-
-                            <Button name="salvar" className="buttonsalvar" type="submit" variant="success">Cadastrar</Button>
-                        </Form.Group>
-
-                    </Col>
-                </Row>
-                
-
-            </Form>
-            <hr />
-
-
-
-            <div className="listagem">
-                <Table striped bordered hover>
-                    <thead>
-                        <tr >
-                            <th hidden >id</th>
-                            <th >AÇÃO </th>
-                            <th >MESA</th>
-                            <th>RAMAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listaMesa.map(l => (
-                            <tr key={l.id}>
-                                <td hidden>{l.id}</td>
-                                <th>
-                                
-                                
-
-                                <Button01  className="buttonAcao"
-                                        startIcon={<EditOutlined/>}
-                                        item={l.id}
-                                        onClick={(e) => handleClick(l.id)}
-                                    ></Button01>
-
-                                    <Button01 className="buttonAcao"
-                                        startIcon={<DeleteOutline/>}
-                                        item={l.id}
-                                        onClick={(e) => handleClick(l.id)}
-                                    ></Button01>
-
-
-                                </th>
-                                <td>{l.mesa}</td>
-                                <td>{l.ramal}</td>
-                            </tr>
-                        ))}
-
-
-                    </tbody>
-                </Table>
+            <div className="listagem2">
+            <BootstrapTable keyField='id' 
+                data={ products } 
+                columns={ columns } 
+                noDataIndication="Não existe mesas cadastradas"
+                striped
+            hover
+            condensed
+                 />
+            
             </div>
 
-
-
-
+            
+            <Link to="/mesa/create">
+            <button className="buttonnovamesa" type="button" variant="success"> Cadastrar nova mesa</button>
+            </Link>
 
         </Container>
 
