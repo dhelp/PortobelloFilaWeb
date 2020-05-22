@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
+import {MenuPrincipal} from '../principal/menu/menu'
+
 
 
 
@@ -131,6 +133,8 @@ export default function Mesa() {
 
         
         <Container fluid>
+
+            <MenuPrincipal />
             <h1>Listagem de Mesas e Ramal</h1>
 
            
