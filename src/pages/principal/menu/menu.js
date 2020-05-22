@@ -18,6 +18,7 @@ export const MenuPrincipal = () => {
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
     <Link  to='/' className='nav-link'>Home</Link>
+    <Link  to='fila' className='nav-link'>Fila</Link>
     <Link  to='mesa' className='nav-link'>Mesa</Link>
 
       {/* <Nav.Link href="#home">Home</Nav.Link>

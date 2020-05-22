@@ -70,7 +70,7 @@ return (
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label>RAMAL</Form.Label>
                     <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Informe o ramal da mesa"
                         value={ramal}
                         onChange={e => setRamal(e.target.value)} />

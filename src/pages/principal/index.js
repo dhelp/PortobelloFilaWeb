@@ -9,6 +9,9 @@ import MesaCreate from '../mesa/mesacreate';
 import MesaEdit from '../mesa/mesaedit';
 
 
+import Fila from '../fila/index';
+
+
 
 
 import Container from 'react-bootstrap/Container';
@@ -23,10 +26,18 @@ export default function Principal() {
                 
                 <MenuPrincipal />
             <Switch>
-            <Route path="/" exact={true}  />
+
+
+            {/* <Route path="/" exact={true}  /> */}
+
+            <Route path="/fila" exact={true} component={Fila} />
+
             <Route path="/mesa" exact={true} component={Mesa} />
             <Route path="/mesa/create" component={MesaCreate} />
             <Route path="/mesa/show/:id" component={MesaEdit} />
+
+
+            
             </Switch>
             
             </Route>
