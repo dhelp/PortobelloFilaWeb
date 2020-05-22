@@ -1,4 +1,5 @@
-import React, {  } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom'
 
 
 export default function Principal() {
@@ -6,7 +7,8 @@ export default function Principal() {
 
     return (
 
-        <h1>Principal</h1>
+        
+        <Link to='mesa'>Mesa</Link>
     )
 
 
