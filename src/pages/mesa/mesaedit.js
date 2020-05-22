@@ -105,10 +105,11 @@ return (
                     <Form.Label>RAMAL</Form.Label>
                     <Form.Control
                     name = "ramal"
-                        type="text"
+                        type="number"
                         autoComplete="new-password"
                         defaultValue={ramal}
                         onChange={e => setRamal(e.target.value)}
+                        pattern="[0-9]*" inputmode="numeric"
                          />
                 </Form.Group>
                 

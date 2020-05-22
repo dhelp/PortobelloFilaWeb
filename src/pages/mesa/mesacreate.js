@@ -73,6 +73,7 @@ return (
                         type="number"
                         placeholder="Informe o ramal da mesa"
                         value={ramal}
+                        pattern="[0-9]*" inputmode="numeric"
                         onChange={e => setRamal(e.target.value)} />
                 </Form.Group>
 
