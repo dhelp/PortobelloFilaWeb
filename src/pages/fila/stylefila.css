@@ -1,0 +1,31 @@
+
+    .filaloja{
+       margin-top: 20px;
+      
+    }
+
+    .filaloja table {
+        max-width: 90%;
+        float: left;
+    }
+
+    .filaloja .menufilaloja{
+        border: 1px solid #dee2e6;
+        float: left;
+        max-width: 10%;
+        height: 100px;
+        
+    }
+
+
+    .filaarquiteta{
+
+     
+    }
+
+    .btn-voltar{
+        width: 150px;
+        height: 90px;
+        
+    }
+ 
