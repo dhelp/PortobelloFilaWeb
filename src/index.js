@@ -11,13 +11,6 @@ import Fila from './pages/fila/index'
 
 
 
-const LoadingIndicator = props => {
-   return (
-   <h1>Hey some async call in progress ! </h1>
-  );  
-}
-
-
 
 ReactDOM.render(
   <BrowserRouter>

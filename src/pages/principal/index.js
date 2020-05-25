@@ -25,16 +25,7 @@ export default function Principal() {
             <Route>
                 
                 <MenuPrincipal />
-            <Switch>
-
-
-            {/* <Route path="/" exact={true}  /> */}
-
-            <Route path="/fila" exact={true} component={Fila} />
-
-            <Route path="/mesa" exact={true} component={Mesa} />
-            <Route path="/mesa/create" component={MesaCreate} />
-            <Route path="/mesa/show/:id" component={MesaEdit} />
+            <Switch>    
 
 
             

@@ -36,7 +36,7 @@ export default function Mesa() {
     const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
 
-    console.log(listaMesa);
+    //console.log(listaMesa);
     const products = listaMesa;
     const columns = [ {
         text: 'AÇÃO',
