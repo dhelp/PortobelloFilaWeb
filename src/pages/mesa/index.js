@@ -79,9 +79,7 @@ export default function Mesa() {
     }];
 
 
-  async  function recall() {
-
-        
+  async  function recall() {    
        await api.get('mesa').then(
             response => {
                 setaListaMesa(response.data)
