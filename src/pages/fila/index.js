@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import Time from 'react-time-format'
-import moment from 'react-moment'
+import Moment from 'moment'
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
@@ -42,12 +42,14 @@ export default function Index() {
 
 
 
-function atob(dt){
-  var today = new Date(Date.parse(dt));
+function formataHora(dt){
+  var today = new Date(Date.parse(dt.replace(/\s/, 'T')+'Z'));
+  
   var time = today.getHours() + ":" + today.getMinutes()
   return time;
-  
 }
+
+
 
 
  async function insereFila(e) {
@@ -96,7 +98,62 @@ async function deletaFila(e) {
 } else if (res.status === 200) {
        alert(res.data.error);
    }
-}
+  }
+
+
+  async function ocupadoTelefone(e) {
+
+    const id = e;
+  
+    const res = await api.put(`fila/ocupadotelefone/${id}`);
+  
+     if (res.status === 204) {
+  
+      review();
+      console.log(res.status);
+
+  } else if (res.status === 200) {
+         alert(res.data.error);
+     }
+  }
+
+
+  async function atendimento(e) {
+
+    const id = e;
+  
+    const res = await api.put(`fila/atendimento/${id}`);
+  
+     if (res.status === 204) {
+  
+      review();
+      console.log(res.status);
+
+  } else if (res.status === 200) {
+         alert(res.data.error);
+     }
+  }
+
+
+  async function disponivel(e) {
+
+    const id = e;
+  
+    const res = await api.put(`fila/disponivel/${id}`);
+  
+     if (res.status === 204) {
+  
+      review();
+      console.log(res.status);
+  
+  
+  
+    
+  
+  } else if (res.status === 200) {
+         alert(res.data.error);
+     }
+  }
 
 
   async function review(){
@@ -163,13 +220,15 @@ async function deletaFila(e) {
 
               {listaFilaVendedor.map(fila => (
                 <tr key={fila.id}>
-                  <th scope="row">{fila.status}</th>
-                  <td>{atob(fila.data_entrada).toString()}</td>
+                  <th scope="row">
+                  
+                  {fila.status}</th>
+              <td>{fila.data_entrada  } {formataHora(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
-                  <td><Button outline  size="sm" onClick={atob}><Brightness1Icon style={{ color: green[500], fontSize: 25 }}/></Button>
-                     <Button outline  size="sm" ><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }}  /></Button>
-                    <Button outline  size="sm" ><PhoneInTalkIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                  <td><Button outline  size="sm" onClick={() => disponivel(fila.id)}><Brightness1Icon style={{ color: green[500], fontSize: 25 }}/></Button>
+                     <Button outline  size="sm" onClick={() => atendimento(fila.id)}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }}  /></Button>
+                    <Button outline  size="sm" onClick={() => ocupadoTelefone(fila.id)}><PhoneInTalkIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
 
                     <Button value={fila.id}  outline  size="sm" onClick={() => deletaFila(fila.id)}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
 
