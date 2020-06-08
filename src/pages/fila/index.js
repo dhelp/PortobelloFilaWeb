@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import Time from 'react-time-format'
+import moment from 'react-moment'
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
@@ -38,6 +39,16 @@ export default function Index() {
 
   const [vendedor_id, setVendedor_id] = useState(0);
   const [mesa_id, setMesa_id] = useState(0);
+
+
+
+function atob(dt){
+  var today = new Date(dt);
+  var time = today.getHours() + ":" + today.getMinutes()
+  return time;
+  
+}
+
 
  async function insereFila(e) {
     e.preventDefault();
@@ -153,14 +164,12 @@ async function deletaFila(e) {
               {listaFilaVendedor.map(fila => (
                 <tr key={fila.id}>
                   <th scope="row">{fila.status}</th>
-                  <td><Time value={fila.data_entrada} format="HH:mm" /></td>
+                  <td>{atob(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
-                  <td><Brightness1Icon style={{ color: green[500], fontSize: 30 }}
-
-                  />
-                    <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 30 }}  />
-                    <PhoneInTalkIcon style={{ color: blue[500], fontSize: 30 }} />
+                  <td><Button outline  size="sm" onClick={atob}><Brightness1Icon style={{ color: green[500], fontSize: 25 }}/></Button>
+                     <Button outline  size="sm" ><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }}  /></Button>
+                    <Button outline  size="sm" ><PhoneInTalkIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
 
                     <Button value={fila.id}  outline  size="sm" onClick={() => deletaFila(fila.id)}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
 
