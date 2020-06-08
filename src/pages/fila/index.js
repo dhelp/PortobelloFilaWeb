@@ -5,7 +5,9 @@ import Time from 'react-time-format'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
-import { green, blue } from '@material-ui/core/colors';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import { green, blue, red } from '@material-ui/core/colors';
 
 import { Container, Row, Col, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter ,
   Form, FormGroup, Label, Input, FormText } from 'reactstrap';
@@ -29,57 +31,104 @@ export default function Index() {
 
   const [listaFilaVendedor, setListaFilaVendedor] = useState([]);
 
-  const [open, setOpen] = useState(false);
 
-  const [vendedor, setVendedor] = useState({
-    age: '',
-    name: 'hai',
-  });
+  const [listaSelectVendedor, setListaSelectVendedor] = useState([]);
+
+  const [listaSelectMesa, setListaSelectMesa] = useState([]);
+
+  const [vendedor_id, setVendedor_id] = useState(0);
+  const [mesa_id, setMesa_id] = useState(0);
+
+ async function insereFila(e) {
+    e.preventDefault();
+    const data = { vendedor_id, mesa_id };
+
+    //console.log(data);
+
+    setModal(!modal);
+
+    const res = await api.post('fila/create', data);
+
+     if (res.status === 201) {
+      review();
+      console.log(res.status);
+
+      
+    //     setMesa('');
+    //     setRamal('');
+    //     history.push('/mesa') 
+
+
+  } else if (res.status === 200) {
+         alert(res.data.error);
+     }
+}
 
 
 
+//DELETA VENDEDOR FILA
+async function deletaFila(e) {
+
+  const id = e;
+
+  const res = await api.delete(`fila/delete/${id}`);
+
+   if (res.status === 204) {
+
+    review();
+    console.log(res.status);
 
 
-  const [mesa, setMesa] = useState({
-    mesa: '',
-    name: '155',
-  });
 
-  const handleChangeVendedor = (event) => {
-    setVendedor(event.target.value);
-  };
+  
 
-  const handleChangeMesa = (event) => {
-    setMesa(event.target.value);
-  };
-
-  function handleClickOpen() {
-    setOpen(true);
-  };
+} else if (res.status === 200) {
+       alert(res.data.error);
+   }
+}
 
 
-  function handleClose() {
-    setOpen(false);
-  };
-
+  async function review(){
+   await api.get('fila').then(
+      response => {
+        setListaFilaVendedor(response.data)
+       
+      }
+    )
+  }
 
   useEffect(() => {
     api.get('fila').then(
       response => {
         setListaFilaVendedor(response.data)
-        console.log(response)
+       
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    api.get('listavendedorfila').then(
+      response => {
+        setListaSelectVendedor(response.data)
+ 
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    api.get('listamesafila').then(
+      response => {
+        setListaSelectMesa(response.data)
+    
       }
     )
   }, [])
 
 
+
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
-
-
-
-
 
 
   return (
@@ -110,8 +159,10 @@ export default function Index() {
                   <td><Brightness1Icon style={{ color: green[500], fontSize: 30 }}
 
                   />
-
+                    <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 30 }}  />
                     <PhoneInTalkIcon style={{ color: blue[500], fontSize: 30 }} />
+
+                    <Button value={fila.id}  outline  size="sm" onClick={() => deletaFila(fila.id)}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
 
                   </td>
 
@@ -127,8 +178,8 @@ export default function Index() {
 
                 <td colspan="5">
 
-                  <Button color="link" onClick={toggle}><AddCircleOutlineIcon style={{ color: green[500] }}
-                    fontSize="large" /> ADICIONAR VENDEDOR(A)</Button>
+                  <Button outline color="success"  onClick={toggle}><span><AddCircleOutlineIcon style={{ color: green[500] }}
+                    fontSize="large" /></span> ADICIONAR VENDEDOR(A)</Button>
                 </td>
               </tr>
             </tfoot>
@@ -148,31 +199,34 @@ export default function Index() {
         <Form>
      
       <FormGroup>
-        <Label for="exampleSelect">Vendendor</Label>
-        <Input type="select" name="select" id="exampleSelect">
-        <option></option>
-          <option>Augusto</option>
-          <option>Cesar</option>
-          <option>Leticia</option>
+        <Label for="selectVendedor">Vendendor</Label>
+        <Input type="select" name="selectVendedor" id="selectVendedor" onChange={e => setVendedor_id(e.target.value)}>
+          <option></option>
+        {listaSelectVendedor.map(list => 
+          <option value={list.id}>{list.nome_vendedor}</option>
+
+        )
+}
+          
         </Input>
       </FormGroup>
 
       <FormGroup>
-        <Label for="exampleSelect">Mesa</Label>
-        <Input type="select" name="select" id="exampleSelect">
+        <Label for="selectMesa">Mesa</Label>
+        <Input type="select" name="selectMesa" id="selectMesa" onChange={e => setMesa_id(e.target.value)}>
         <option></option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        {listaSelectMesa.map(list => 
+          <option value={list.id}>{list.mesa}</option>
+
+        )
+}
         </Input>
       </FormGroup>
      
     </Form>
           </ModalBody>
         <ModalFooter>
-          <Button color="success"  onClick={toggle}>SALVAR</Button>
+          <Button color="success"  onClick={insereFila}>SALVAR</Button>
           <Button color="danger" onClick={toggle}>CANCELAR</Button>
         </ModalFooter>
       </Modal>
