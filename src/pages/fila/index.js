@@ -43,7 +43,7 @@ export default function Index() {
 
 
 function atob(dt){
-  var today = new Date(dt);
+  var today = new Date(Date.parse(dt));
   var time = today.getHours() + ":" + today.getMinutes()
   return time;
   
@@ -164,7 +164,7 @@ async function deletaFila(e) {
               {listaFilaVendedor.map(fila => (
                 <tr key={fila.id}>
                   <th scope="row">{fila.status}</th>
-                  <td>{atob(fila.data_entrada)}</td>
+                  <td>{atob(fila.data_entrada).toString()}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
                   <td><Button outline  size="sm" onClick={atob}><Brightness1Icon style={{ color: green[500], fontSize: 25 }}/></Button>
