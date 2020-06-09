@@ -33,16 +33,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 export default function Index() {
 
   const [listaFilaVendedor, setListaFilaVendedor] = useState([]);
-
-
   const [listaSelectVendedor, setListaSelectVendedor] = useState([]);
-
   const [listaSelectMesa, setListaSelectMesa] = useState([]);
-
   const [vendedor_id, setVendedor_id] = useState(0);
   const [mesa_id, setMesa_id] = useState(0);
 
-  const nvendedor = useRef(null);
+
 
   function formataHora(dt) {
     var today = new Date(Date.parse(dt.replace(/\s/, 'T') + 'Z'));
@@ -52,11 +48,7 @@ export default function Index() {
   }
 
 
-function abreModalDelete(e){
 
-  alert(e.teste);
-
-}
 
   async function insereFila(e) {
     e.preventDefault();
@@ -71,12 +63,6 @@ function abreModalDelete(e){
     if (res.status === 201) {
       review();
       console.log(res.status);
-
-
-      //     setMesa('');
-      //     setRamal('');
-      //     history.push('/mesa') 
-
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -93,14 +79,9 @@ function abreModalDelete(e){
     const res = await api.delete(`fila/delete/${id}`);
 
     if (res.status === 204) {
-
+      setModalConfDel(!modalConfDel)
       review();
       console.log(res.status);
-
-
-
-
-
     } else if (res.status === 200) {
       alert(res.data.error);
     }
@@ -116,6 +97,7 @@ function abreModalDelete(e){
     if (res.status === 204) {
 
       review();
+      setModalConfTel(!modalConfTel)
       console.log(res.status);
 
     } else if (res.status === 200) {
@@ -133,6 +115,7 @@ function abreModalDelete(e){
     if (res.status === 204) {
 
       review();
+      setModalConfAt(!modalConfAt)
       console.log(res.status);
 
     } else if (res.status === 200) {
@@ -151,10 +134,7 @@ function abreModalDelete(e){
 
       review();
       console.log(res.status);
-
-
-
-
+      setModalConfDi(!modalConfDi)
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -202,11 +182,37 @@ function abreModalDelete(e){
 
   const [modal, setModal] = useState(false);
   const [modalConfDel, setModalConfDel] = useState(false);
+  const [modalConfTel, setModalConfTel] = useState(false);
+  const [modalConfAt, setModalConfAt] = useState(false);
+  const [modalConfDi, setModalConfDi] = useState(false);
+
+  const [modalConfDelNome, setModalConfDelNome] = useState(false);
+  const [modalConfDelId, setModalConfDelId] = useState(false);
 
   const toggle = () => setModal(!modal);
-  const toggleDel = () => {
+  const toggleDel = (e) => {
     setModalConfDel(!modalConfDel)
-    
+    setModalConfDelNome(e.nome);
+    setModalConfDelId(e.id);
+  }
+
+  const toggleTel = (e) => {
+    setModalConfTel(!modalConfTel)
+    setModalConfDelNome(e.nome);
+    setModalConfDelId(e.id);
+  }
+
+
+  const toggleAt = (e) => {
+    setModalConfAt(!modalConfAt)
+    setModalConfDelNome(e.nome);
+    setModalConfDelId(e.id);
+  }
+
+  const toggleDi = (e) => {
+    setModalConfDi(!modalConfDi)
+    setModalConfDelNome(e.nome);
+    setModalConfDelId(e.id);
   }
 
   return (
@@ -230,17 +236,23 @@ function abreModalDelete(e){
 
               {listaFilaVendedor.map(fila => (
                 <tr key={fila.id}>
-                  <th scope="row">
-
-                    {fila.status}</th>
+                  <th >
+                  
+                  {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} />: 
+                  fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} />:
+                  fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} />:
+                  fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} />:
+                  ''} 
+                  {' '}
+                  {fila.status}</th>
                   <td>{formataHora(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
-                  <td><Button outline size="sm" onClick={() => disponivel(fila.id)}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={() => atendimento(fila.id)}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={() => ocupadoTelefone(fila.id)}><PhoneInTalkIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                  <td><Button outline size="sm" onClick={(e) =>toggleDi({nome: fila.nome_vendedor, id:fila.id})}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
+                    <Button outline size="sm" onClick={(e) =>toggleAt({nome: fila.nome_vendedor, id:fila.id})}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                    <Button outline size="sm" onClick={(e) =>toggleTel({nome: fila.nome_vendedor, id:fila.id})}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
 
-                    <Button value={fila.id} outline size="sm" onClick={() =>toggleDel({nome: fila.nome_vendedor, teste:fila.id})}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
+                    <Button value={fila.id} outline size="sm" onClick={(e) =>toggleDel({nome: fila.nome_vendedor, id:fila.id})}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
 
                   </td>
 
@@ -314,14 +326,48 @@ function abreModalDelete(e){
       <Modal isOpen={modalConfDel} fade={false} toggle={toggleDel} >
         <ModalHeader toggle={toggleDel}>Confirmação</ModalHeader>
         <ModalBody>
-          Deseja retirar a vendedor(a) {} da fila?
+          Deseja retirar a vendedor(a) <strong>{modalConfDelNome}</strong> da fila?
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={toggleDel}>SIM</Button>{' '}
+          <Button color="success" onClick={() => deletaFila(modalConfDelId)}>SIM</Button>{' '}
           <Button color="secondary" onClick={toggleDel}>NÃO</Button>
         </ModalFooter>
       </Modal>
 
+      <Modal isOpen={modalConfTel} fade={false} toggle={toggleTel} >
+        <ModalHeader toggle={toggleTel}>Confirmação</ModalHeader>
+        <ModalBody>
+          Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para 'Telefone'?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="success" onClick={() => ocupadoTelefone(modalConfDelId)}>SIM</Button>{' '}
+          <Button color="secondary" onClick={toggleTel}>NÃO</Button>
+        </ModalFooter>
+      </Modal>
+
+
+      
+      <Modal isOpen={modalConfAt} fade={false} toggle={toggleAt} >
+        <ModalHeader toggle={toggleAt}>Confirmação</ModalHeader>
+        <ModalBody>
+          Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para 'atendimento'?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="success" onClick={() => atendimento(modalConfDelId)}>SIM</Button>{' '}
+          <Button color="secondary" onClick={toggleAt}>NÃO</Button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal isOpen={modalConfDi} fade={false} toggle={toggleDi} >
+        <ModalHeader toggle={toggleDi}>Confirmação</ModalHeader>
+        <ModalBody>
+          Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para <strong>'disponivel'</strong>?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="success" onClick={() => disponivel(modalConfDelId)}>SIM</Button>{' '}
+          <Button color="secondary" onClick={toggleDi}>NÃO</Button>
+        </ModalFooter>
+      </Modal>
     </Container>
 
 
