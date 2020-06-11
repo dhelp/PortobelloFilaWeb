@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
-import Time from 'react-time-format'
-import Moment from 'moment'
+
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
@@ -15,7 +14,7 @@ import {
   Form, FormGroup, Label, Input, FormText
 } from 'reactstrap';
 
-
+import ModalFocusAfterClose from '../componentes/modal.js';
 
 
 import api from '../services/api';
@@ -37,6 +36,7 @@ export default function Index() {
   const [listaSelectMesa, setListaSelectMesa] = useState([]);
   const [vendedor_id, setVendedor_id] = useState(0);
   const [mesa_id, setMesa_id] = useState(0);
+  const [msgInfo, setMsgInfo] = useState([]);
 
 
 
@@ -78,12 +78,22 @@ export default function Index() {
 
     const res = await api.delete(`fila/delete/${id}`);
 
+    console.log(res)
+
     if (res.status === 204) {
-      setModalConfDel(!modalConfDel)
+      toggleDelOff()
+      //setModalConfDel(!modalConfDel)
       review();
       console.log(res.status);
     } else if (res.status === 200) {
       alert(res.data.error);
+    } else {
+
+      toggleDelOff()
+      setModalConfDel(!modalConfDel)
+      setMsgInfo(res.data.error);
+      toggleInfo()
+
     }
   }
 
@@ -102,6 +112,14 @@ export default function Index() {
 
     } else if (res.status === 200) {
       alert(res.data.error);
+    } else {
+
+      //toggleTel()
+      setModalConfTel(!modalConfTel)
+      console.log(res);
+      setMsgInfo(res.data.error);
+      toggleInfo()
+      //alert(res.data.error);
     }
   }
 
@@ -160,23 +178,7 @@ export default function Index() {
     )
   }, [])
 
-  useEffect(() => {
-    api.get('listavendedorfila').then(
-      response => {
-        setListaSelectVendedor(response.data)
 
-      }
-    )
-  }, [])
-
-  useEffect(() => {
-    api.get('listamesafila').then(
-      response => {
-        setListaSelectMesa(response.data)
-
-      }
-    )
-  }, [])
 
 
 
@@ -186,10 +188,42 @@ export default function Index() {
   const [modalConfAt, setModalConfAt] = useState(false);
   const [modalConfDi, setModalConfDi] = useState(false);
 
+
+
   const [modalConfDelNome, setModalConfDelNome] = useState(false);
   const [modalConfDelId, setModalConfDelId] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  const [modalInfo, setModalInfo] = useState(false);
+
+  const toggleInfo = () => setModalInfo(!modalInfo);
+
+  const togleModalOff = () => {
+    setModal(!modal);
+  }
+
+  const toggle = async (e) => {
+    //.preventDefault();
+    await api.get('listamesafila').then(
+      response => {
+        setListaSelectMesa(response.data)
+
+      }
+    )
+
+    await api.get('listavendedorfila').then(
+      response => {
+        setListaSelectVendedor(response.data)
+
+      }
+    )
+    setModal(!modal);
+
+  }
+
+  const toggleDelOff = () => {
+    setModalConfDel(!modalConfDel)
+  }
+
   const toggleDel = (e) => {
     setModalConfDel(!modalConfDel)
     setModalConfDelNome(e.nome);
@@ -202,6 +236,60 @@ export default function Index() {
     setModalConfDelId(e.id);
   }
 
+  const setAtendimento = (e) => {
+
+    if (e.id_status == 2) {
+      setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
+      toggleInfo()
+
+    }  else if(e.id_status == 3 )
+    {
+      setMsgInfo('Ação não permitida. Deixe o(a) vendedor(a) ' + e.nome + ' disponível primeiro.');
+      toggleInfo()
+    }
+    else {
+
+      toggleAt(e)
+    }
+  }
+
+  const setTelefone = (e) => {
+
+    if (e.id_status == 3) {
+      setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está ao telefone.`);
+      toggleInfo()
+
+    }  else if(e.id_status == 2 )
+    {
+      setMsgInfo(`Ação não permitida. \n Deixe o(a) vendedor(a) '${e.nome}' disponível primeiro.`);
+      toggleInfo()
+    }else {
+
+      toggleTel(e)
+    }
+  }
+
+  const setDisponivel = (e) => {
+
+    if (e.id_status == 1) {
+      setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está disponível.`);
+      toggleInfo()
+    }else {
+
+      toggleDi(e)
+    }
+  }
+
+  const setSairDaFila = (e) => {
+
+    if (e.id_status == 2) {
+      setMsgInfo(`Ação não permitida. O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
+      toggleInfo()
+    }else {
+
+      toggleDel(e)
+    }
+  }
 
   const toggleAt = (e) => {
     setModalConfAt(!modalConfAt)
@@ -215,10 +303,14 @@ export default function Index() {
     setModalConfDelId(e.id);
   }
 
+
+
+
   return (
     <Container className="content">
+     
       <Row>
-
+       
         <div class="table-responsive">
           <Table bordered >
             <thead>
@@ -237,22 +329,22 @@ export default function Index() {
               {listaFilaVendedor.map(fila => (
                 <tr key={fila.id}>
                   <th >
-                  
-                  {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} />: 
-                  fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} />:
-                  fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} />:
-                  fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} />:
-                  ''} 
-                  {' '}
-                  {fila.status}</th>
+
+                    {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> :
+                      fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /> :
+                        fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /> :
+                          fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} /> :
+                            ''}
+                    {' '}
+                    {fila.status}</th>
                   <td>{formataHora(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
-                  <td><Button outline size="sm" onClick={(e) =>toggleDi({nome: fila.nome_vendedor, id:fila.id})}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={(e) =>toggleAt({nome: fila.nome_vendedor, id:fila.id})}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={(e) =>toggleTel({nome: fila.nome_vendedor, id:fila.id})}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
+                  <td><Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
+                    <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                    <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id , id_status: fila.id_status})}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
 
-                    <Button value={fila.id} outline size="sm" onClick={(e) =>toggleDel({nome: fila.nome_vendedor, id:fila.id})}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
+                    <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
 
                   </td>
 
@@ -268,7 +360,7 @@ export default function Index() {
 
                 <td colspan="5">
 
-                  <Button outline color="success" onClick={toggle}><span><AddCircleOutlineIcon style={{ color: green[500] }}
+                  <Button outline color="success" onClick={(e) => toggle()}><span><AddCircleOutlineIcon style={{ color: green[500] }}
                     fontSize="large" /></span> ADICIONAR VENDEDOR(A)</Button>
                 </td>
               </tr>
@@ -283,8 +375,8 @@ export default function Index() {
 
       </Row>
 
-      <Modal isOpen={modal} fade={false} toggle={toggle} >
-        <ModalHeader toggle={toggle}>ADICIONAR VENDEDOR(A) NA FILA</ModalHeader>
+      <Modal isOpen={modal} fade={false} toggle={togleModalOff} >
+        <ModalHeader toggle={togleModalOff}>ADICIONAR VENDEDOR(A) NA FILA</ModalHeader>
         <ModalBody>
           <Form>
 
@@ -317,20 +409,20 @@ export default function Index() {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={insereFila}>SALVAR</Button>
-          <Button color="danger" onClick={toggle}>CANCELAR</Button>
+          <Button color="danger" onClick={togleModalOff}>CANCELAR</Button>
         </ModalFooter>
       </Modal>
 
 
 
-      <Modal isOpen={modalConfDel} fade={false} toggle={toggleDel} >
-        <ModalHeader toggle={toggleDel}>Confirmação</ModalHeader>
+      <Modal isOpen={modalConfDel} fade={false} toggle={toggleDelOff} >
+        <ModalHeader toggle={toggleDelOff}>Confirmação</ModalHeader>
         <ModalBody>
           Deseja retirar a vendedor(a) <strong>{modalConfDelNome}</strong> da fila?
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => deletaFila(modalConfDelId)}>SIM</Button>{' '}
-          <Button color="secondary" onClick={toggleDel}>NÃO</Button>
+          <Button color="success" onClick={(e) => deletaFila(modalConfDelId)}>SIM</Button>{' '}
+          <Button color="secondary" onClick={toggleDelOff}>NÃO</Button>
         </ModalFooter>
       </Modal>
 
@@ -346,7 +438,7 @@ export default function Index() {
       </Modal>
 
 
-      
+
       <Modal isOpen={modalConfAt} fade={false} toggle={toggleAt} >
         <ModalHeader toggle={toggleAt}>Confirmação</ModalHeader>
         <ModalBody>
@@ -366,6 +458,18 @@ export default function Index() {
         <ModalFooter>
           <Button color="success" onClick={() => disponivel(modalConfDelId)}>SIM</Button>{' '}
           <Button color="secondary" onClick={toggleDi}>NÃO</Button>
+        </ModalFooter>
+      </Modal>
+
+
+      <Modal returnFocusAfterClose='false' isOpen={modalInfo} fade={false} toggle={toggleInfo} >
+        <ModalHeader className='hedinfo' toggle={toggleInfo}>ALERTA</ModalHeader>
+        <ModalBody>
+          {msgInfo}
+        </ModalBody>
+        <ModalFooter>
+
+          <Button color="danger" onClick={toggleInfo}>FECHAR</Button>
         </ModalFooter>
       </Modal>
     </Container>
