@@ -14,8 +14,6 @@ import {
   Form, FormGroup, Label, Input, FormText
 } from 'reactstrap';
 
-import ModalFocusAfterClose from '../componentes/modal.js';
-
 
 import api from '../services/api';
 
@@ -54,6 +52,7 @@ export default function Index() {
     e.preventDefault();
     const data = { vendedor_id, mesa_id };
 
+    console.log(vendedor_id);
 
     if (vendedor_id==0){
       setMsgInfo('Selecione um(a) vendedor(a)');
@@ -72,7 +71,8 @@ export default function Index() {
 
     if (res.status === 201) {
       review();
-      console.log(res.status);
+      setVendedor_id(0);
+      setMesa_id(0);
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -214,6 +214,10 @@ export default function Index() {
 
   const toggle = async (e) => {
     //.preventDefault();
+
+    setVendedor_id(0);
+    setMesa_id(0);
+    
     await api.get('listamesafila').then(
       response => {
         setListaSelectMesa(response.data)
