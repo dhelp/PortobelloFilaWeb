@@ -1,4 +1,11 @@
 
+    * {
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        box-sizing: border-box;
+    }
+    
     .content {
         margin-top: 20px;
 
@@ -43,3 +50,10 @@
          border-top-left-radius: 5px;
          border-top-right-radius: 5px;
      }
+
+     #mmacao{
+        display: flex;
+        justify-content: space-around; 
+        
+     }
+    

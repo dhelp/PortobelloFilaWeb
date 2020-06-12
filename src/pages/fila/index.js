@@ -54,7 +54,17 @@ export default function Index() {
     e.preventDefault();
     const data = { vendedor_id, mesa_id };
 
-    //console.log(data);
+
+    if (vendedor_id==0){
+      setMsgInfo('Selecione um(a) vendedor(a)');
+      toggleInfo()
+    }else if (mesa_id==0){
+      setMsgInfo('Selecione uma mesa.');
+      toggleInfo()
+    }
+    else{
+
+    console.log(vendedor_id);
 
     setModal(!modal);
 
@@ -67,6 +77,7 @@ export default function Index() {
     } else if (res.status === 200) {
       alert(res.data.error);
     }
+  }
   }
 
 
@@ -242,8 +253,7 @@ export default function Index() {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
       toggleInfo()
 
-    }  else if(e.id_status == 3 )
-    {
+    } else if (e.id_status == 3) {
       setMsgInfo('Ação não permitida. Deixe o(a) vendedor(a) ' + e.nome + ' disponível primeiro.');
       toggleInfo()
     }
@@ -259,11 +269,10 @@ export default function Index() {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está ao telefone.`);
       toggleInfo()
 
-    }  else if(e.id_status == 2 )
-    {
+    } else if (e.id_status == 2) {
       setMsgInfo(`Ação não permitida. \n Deixe o(a) vendedor(a) '${e.nome}' disponível primeiro.`);
       toggleInfo()
-    }else {
+    } else {
 
       toggleTel(e)
     }
@@ -274,7 +283,7 @@ export default function Index() {
     if (e.id_status == 1) {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está disponível.`);
       toggleInfo()
-    }else {
+    } else {
 
       toggleDi(e)
     }
@@ -285,7 +294,7 @@ export default function Index() {
     if (e.id_status == 2) {
       setMsgInfo(`Ação não permitida. O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
       toggleInfo()
-    }else {
+    } else {
 
       toggleDel(e)
     }
@@ -308,16 +317,16 @@ export default function Index() {
 
   return (
     <Container className="content">
-     
+
       <Row>
-       
+
         <div class="table-responsive">
-          <Table bordered >
+          <Table bordered id="listafila">
             <thead>
 
               <tr>
                 <th>STATUS</th>
-                <th scope="col">HORA</th>
+                <th>HORA</th>
                 <th>VENDEDOR(A)</th>
                 <th>RAMAL</th>
                 <th>AÇÃO</th>
@@ -337,15 +346,17 @@ export default function Index() {
                             ''}
                     {' '}
                     {fila.status}</th>
-                  <td>{formataHora(fila.data_entrada)}</td>
+                  <td scope="row" class="visible-sm visible-lg">{formataHora(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
-                  <td><Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
+                  <td >
+                    <div id="mmacao">
+                    <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
                     <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id , id_status: fila.id_status})}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
+                    <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
 
                     <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
-
+                    </div>
                   </td>
 
                 </tr>
