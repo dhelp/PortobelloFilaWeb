@@ -7,7 +7,13 @@ import Brightness1Icon from '@material-ui/icons/Brightness1';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
-import { green, blue, red } from '@material-ui/core/colors';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ReplayIcon from '@material-ui/icons/Replay';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+import EditIcon from '@material-ui/icons/Edit';
+import { green, blue, red, yellow } from '@material-ui/core/colors';
+
+
 
 import {
   Container, Row, Col, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter,
@@ -33,6 +39,7 @@ export default function Index() {
   const [listaSelectVendedor, setListaSelectVendedor] = useState([]);
   const [listaSelectMesa, setListaSelectMesa] = useState([]);
   const [vendedor_id, setVendedor_id] = useState(0);
+  const [nomeVendedor, setNomeVendedor] = useState([]);
   const [mesa_id, setMesa_id] = useState(0);
   const [msgInfo, setMsgInfo] = useState([]);
 
@@ -52,7 +59,7 @@ export default function Index() {
     e.preventDefault();
     const data = { vendedor_id, mesa_id };
 
-    console.log(vendedor_id);
+    
 
     if (vendedor_id==0){
       setMsgInfo('Selecione um(a) vendedor(a)');
@@ -157,13 +164,17 @@ export default function Index() {
 
     const id = e;
 
-    const res = await api.put(`fila/disponivel/${id}`);
+    const data  = e.nome;
+
+    console.log(data);
+
+    const res = await api.put(`fila/disponivel/${id}`, data);
 
     if (res.status === 204) {
 
       review();
       console.log(res.status);
-      setModalConfDi(!modalConfDi)
+      setModalConfDi(false)
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -202,6 +213,7 @@ export default function Index() {
 
 
   const [modalConfDelNome, setModalConfDelNome] = useState(false);
+  const [modalTipoAtendimento, setModalTipoAtendimento] = useState(false);
   const [modalConfDelId, setModalConfDelId] = useState(false);
 
   const [modalInfo, setModalInfo] = useState(false);
@@ -217,7 +229,7 @@ export default function Index() {
 
     setVendedor_id(0);
     setMesa_id(0);
-    
+
     await api.get('listamesafila').then(
       response => {
         setListaSelectMesa(response.data)
@@ -287,9 +299,19 @@ export default function Index() {
     if (e.id_status == 1) {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está disponível.`);
       toggleInfo()
-    } else {
+    } else if (e.id_status == 3) {
 
       toggleDi(e)
+    } 
+    
+    
+    else {
+      
+      setModalTipoAtendimento(!modalTipoAtendimento)
+      setModalConfDelId(e.id);
+      
+      
+      //toggleDi(e)
     }
   }
 
@@ -304,6 +326,25 @@ export default function Index() {
     }
   }
 
+  
+
+
+  const toggleTipoAtendimento = (e) => {
+
+    console.log(modalConfDelId);
+    
+
+    disponivel(modalConfDelId);
+
+    setModalTipoAtendimento(!modalTipoAtendimento)
+
+    
+    // setModalConfDelNome(e.nome);
+    //setModalConfDelId(e.id);
+
+
+  }
+
   const toggleAt = (e) => {
     setModalConfAt(!modalConfAt)
     setModalConfDelNome(e.nome);
@@ -311,6 +352,7 @@ export default function Index() {
   }
 
   const toggleDi = (e) => {
+    //setModalTipoAtendimento(!modalTipoAtendimento)
     setModalConfDi(!modalConfDi)
     setModalConfDelNome(e.nome);
     setModalConfDelId(e.id);
@@ -350,7 +392,7 @@ export default function Index() {
                             ''}
                     {' '}
                     {fila.status}</th>
-                  <td scope="row" class="visible-sm visible-lg">{formataHora(fila.data_entrada)}</td>
+                  <td class="visible-sm visible-lg">{formataHora(fila.data_entrada)}</td>
                   <td>{fila.nome_vendedor}</td>
                   <td>{fila.ramal}</td>
                   <td >
@@ -442,7 +484,7 @@ export default function Index() {
       </Modal>
 
       <Modal isOpen={modalConfTel} fade={false} toggle={toggleTel} >
-        <ModalHeader toggle={toggleTel}>Confirmação</ModalHeader>
+        <ModalHeader toggle={toggleTel}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /> Confirmação</ModalHeader>
         <ModalBody>
           Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para 'Telefone'?
         </ModalBody>
@@ -455,7 +497,7 @@ export default function Index() {
 
 
       <Modal isOpen={modalConfAt} fade={false} toggle={toggleAt} >
-        <ModalHeader toggle={toggleAt}>Confirmação</ModalHeader>
+        <ModalHeader toggle={toggleAt}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /> Confirmação</ModalHeader>
         <ModalBody>
           Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para 'atendimento'?
         </ModalBody>
@@ -466,7 +508,7 @@ export default function Index() {
       </Modal>
 
       <Modal isOpen={modalConfDi} fade={false} toggle={toggleDi} >
-        <ModalHeader toggle={toggleDi}>Confirmação</ModalHeader>
+        <ModalHeader toggle={toggleDi}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> Confirmação</ModalHeader>
         <ModalBody>
           Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para <strong>'disponivel'</strong>?
         </ModalBody>
@@ -487,6 +529,19 @@ export default function Index() {
           <Button color="danger" onClick={toggleInfo}>FECHAR</Button>
         </ModalFooter>
       </Modal>
+
+      <Modal returnFocusAfterClose='true' isOpen={modalTipoAtendimento} fade={false} >
+        <ModalHeader  >< ContactPhoneIcon style={{ color: blue[500], fontSize: 45 }} /> Informe o tipo de atendimento:</ModalHeader>
+        <ModalBody>
+          <div  id='divmodalsetretorno'>
+          <Button outline color="primary" onClick={() => toggleTipoAtendimento({id_retorno: 1})}><span><ThumbUpIcon style={{ color: blue[700], fontSize: 35 }}  /></span>  ATENDIMENTO</Button>
+          <Button outline color="warning" onClick={() => toggleTipoAtendimento({id_retorno: 2})} ><span><ReplayIcon style={{ color: yellow[900], fontSize: 35 }} /></span>RETORNO DE ORÇAMENTO</Button>
+          </div>
+        </ModalBody>
+       
+      </Modal>
+
+
     </Container>
 
 
