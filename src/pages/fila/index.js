@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
+import io from 'socket.io-client';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -11,7 +12,11 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReplayIcon from '@material-ui/icons/Replay';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import EditIcon from '@material-ui/icons/Edit';
+import CachedIcon from '@material-ui/icons/Cached';
 import { green, blue, red, yellow } from '@material-ui/core/colors';
+
+
+
 
 
 
@@ -39,9 +44,18 @@ export default function Index() {
   const [listaSelectVendedor, setListaSelectVendedor] = useState([]);
   const [listaSelectMesa, setListaSelectMesa] = useState([]);
   const [vendedor_id, setVendedor_id] = useState(0);
-  const [nomeVendedor, setNomeVendedor] = useState([]);
   const [mesa_id, setMesa_id] = useState(0);
   const [msgInfo, setMsgInfo] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [modalConfDel, setModalConfDel] = useState(false);
+  const [modalConfTel, setModalConfTel] = useState(false);
+  const [modalConfAt, setModalConfAt] = useState(false);
+  const [modalConfDi, setModalConfDi] = useState(false);
+  const [modalConfDelNome, setModalConfDelNome] = useState(false);
+  const [modalTipoAtendimento, setModalTipoAtendimento] = useState(false);
+  const [modalConfDelId, setModalConfDelId] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
+  const [n, setN] = useState([]);
 
 
 
@@ -59,32 +73,32 @@ export default function Index() {
     e.preventDefault();
     const data = { vendedor_id, mesa_id };
 
-    
 
-    if (vendedor_id==0){
+
+    if (vendedor_id == 0) {
       setMsgInfo('Selecione um(a) vendedor(a)');
       toggleInfo()
-    }else if (mesa_id==0){
+    } else if (mesa_id == 0) {
       setMsgInfo('Selecione uma mesa.');
       toggleInfo()
     }
-    else{
+    else {
 
-    console.log(vendedor_id);
+      console.log(vendedor_id);
 
-    setModal(!modal);
+      setModal(!modal);
 
-    const res = await api.post('fila/create', data);
+      const res = await api.post('fila/create', data);
 
-    if (res.status === 201) {
-      review();
-      setVendedor_id(0);
-      setMesa_id(0);
+      if (res.status === 201) {
+        review();
+        setVendedor_id(0);
+        setMesa_id(0);
 
-    } else if (res.status === 200) {
-      alert(res.data.error);
+      } else if (res.status === 200) {
+        alert(res.data.error);
+      }
     }
-  }
   }
 
 
@@ -164,7 +178,7 @@ export default function Index() {
 
     const id = e;
 
-    const data  = e.nome;
+    const data = e.nome;
 
     console.log(data);
 
@@ -189,7 +203,15 @@ export default function Index() {
 
       }
     )
+
+    aa();
   }
+
+  const socket = io.connect('https://app-server-fila-gabriel.herokuapp.com/');
+  socket.on('join2', receiveinfo =>{
+    setN(receiveinfo);
+});
+
 
   useEffect(() => {
     api.get('fila').then(
@@ -198,25 +220,13 @@ export default function Index() {
 
       }
     )
-  }, [])
+  }, [n])
 
 
 
 
 
-  const [modal, setModal] = useState(false);
-  const [modalConfDel, setModalConfDel] = useState(false);
-  const [modalConfTel, setModalConfTel] = useState(false);
-  const [modalConfAt, setModalConfAt] = useState(false);
-  const [modalConfDi, setModalConfDi] = useState(false);
-
-
-
-  const [modalConfDelNome, setModalConfDelNome] = useState(false);
-  const [modalTipoAtendimento, setModalTipoAtendimento] = useState(false);
-  const [modalConfDelId, setModalConfDelId] = useState(false);
-
-  const [modalInfo, setModalInfo] = useState(false);
+  
 
   const toggleInfo = () => setModalInfo(!modalInfo);
 
@@ -276,6 +286,7 @@ export default function Index() {
     else {
 
       toggleAt(e)
+      
     }
   }
 
@@ -291,6 +302,7 @@ export default function Index() {
     } else {
 
       toggleTel(e)
+      
     }
   }
 
@@ -302,15 +314,15 @@ export default function Index() {
     } else if (e.id_status == 3) {
 
       toggleDi(e)
-    } 
-    
-    
+    }
+
+
     else {
-      
+
       setModalTipoAtendimento(!modalTipoAtendimento)
       setModalConfDelId(e.id);
-      
-      
+
+
       //toggleDi(e)
     }
   }
@@ -323,16 +335,17 @@ export default function Index() {
     } else {
 
       toggleDel(e)
+      
     }
   }
 
-  
+
 
 
   const toggleTipoAtendimento = (e) => {
 
     console.log(modalConfDelId);
-    
+
 
     disponivel(modalConfDelId);
 
@@ -359,14 +372,28 @@ export default function Index() {
   }
 
 
+  const aa = (e) => {
+   
+     const socket = io.connect('https://app-server-fila-gabriel.herokuapp.com/');
+     socket.on('connect', function(data) {
+      socket.emit('join2', 'Hello World from Fila2');
+   }
+   );
+    
+  }
+
+
+
 
 
   return (
+
     <Container className="content">
 
       <Row>
 
         <div class="table-responsive">
+          {/* <Button onClick={() => aa()}>clique aqui {n}</Button> */}
           <Table bordered id="listafila">
             <thead>
 
@@ -397,11 +424,11 @@ export default function Index() {
                   <td>{fila.ramal}</td>
                   <td >
                     <div id="mmacao">
-                    <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
-                    <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
+                      <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
+                      <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                      <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
 
-                    <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
+                      <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
                     </div>
                   </td>
 
@@ -533,12 +560,12 @@ export default function Index() {
       <Modal returnFocusAfterClose='true' isOpen={modalTipoAtendimento} fade={false} >
         <ModalHeader  >< ContactPhoneIcon style={{ color: blue[500], fontSize: 45 }} /> Informe o tipo de atendimento:</ModalHeader>
         <ModalBody>
-          <div  id='divmodalsetretorno'>
-          <Button outline color="primary" onClick={() => toggleTipoAtendimento({id_retorno: 1})}><span><ThumbUpIcon style={{ color: blue[700], fontSize: 35 }}  /></span>  ATENDIMENTO</Button>
-          <Button outline color="warning" onClick={() => toggleTipoAtendimento({id_retorno: 2})} ><span><ReplayIcon style={{ color: yellow[900], fontSize: 35 }} /></span>RETORNO DE ORÇAMENTO</Button>
+          <div id='divmodalsetretorno'>
+            <Button outline color="primary" onClick={() => toggleTipoAtendimento({ id_retorno: 1 })}><span><ThumbUpIcon style={{ color: blue[700], fontSize: 35 }} /></span>  ATENDIMENTO</Button>
+            <Button outline color="warning" onClick={() => toggleTipoAtendimento({ id_retorno: 2 })} ><span><ReplayIcon style={{ color: yellow[900], fontSize: 35 }} /></span>RETORNO DE ORÇAMENTO</Button>
           </div>
         </ModalBody>
-       
+
       </Modal>
 
 
