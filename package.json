@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "netlify-cli": "^2.54.0",
     "react-time-format": "0.0.5"
   }
 }
