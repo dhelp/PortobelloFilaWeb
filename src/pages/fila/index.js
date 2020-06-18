@@ -84,7 +84,7 @@ export default function Index() {
     }
     else {
 
-      console.log(vendedor_id);
+      //console.log(vendedor_id);
 
       setModal(!modal);
 
@@ -110,13 +110,13 @@ export default function Index() {
 
     const res = await api.delete(`fila/delete/${id}`);
 
-    console.log(res)
+    //console.log(res)
 
     if (res.status === 204) {
       toggleDelOff()
       //setModalConfDel(!modalConfDel)
       review();
-      console.log(res.status);
+      //console.log(res.status);
     } else if (res.status === 200) {
       alert(res.data.error);
     } else {
@@ -140,7 +140,7 @@ export default function Index() {
 
       review();
       setModalConfTel(!modalConfTel)
-      console.log(res.status);
+      //console.log(res.status);
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -148,7 +148,7 @@ export default function Index() {
 
       //toggleTel()
       setModalConfTel(!modalConfTel)
-      console.log(res);
+      //console.log(res);
       setMsgInfo(res.data.error);
       toggleInfo()
       //alert(res.data.error);
@@ -166,7 +166,7 @@ export default function Index() {
 
       review();
       setModalConfAt(!modalConfAt)
-      console.log(res.status);
+      //console.log(res.status);
 
     } else if (res.status === 200) {
       alert(res.data.error);
@@ -187,7 +187,7 @@ export default function Index() {
     if (res.status === 204) {
 
       review();
-      console.log(res.status);
+     // console.log(res.status);
       setModalConfDi(false)
 
     } else if (res.status === 200) {
@@ -223,7 +223,7 @@ export default function Index() {
   //const socket = io.connect('http://localhost:3000');
   socket.on('join2', receiveinfo => {
     setN(receiveinfo);
-    console.log(receiveinfo);
+    //console.log(receiveinfo);
   });
 
 
@@ -366,7 +366,7 @@ export default function Index() {
 
   const toggleTipoAtendimento = (e) => {
 
-    console.log(modalConfDelId);
+    //console.log(modalConfDelId);
 
 
     disponivel(modalConfDelId);
