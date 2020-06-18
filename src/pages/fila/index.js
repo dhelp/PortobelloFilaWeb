@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -11,18 +11,18 @@ import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReplayIcon from '@material-ui/icons/Replay';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
-import EditIcon from '@material-ui/icons/Edit';
-import CachedIcon from '@material-ui/icons/Cached';
+// import EditIcon from '@material-ui/icons/Edit';
+// import CachedIcon from '@material-ui/icons/Cached';
 import { green, blue, red, yellow } from '@material-ui/core/colors';
 
 
 
-
+import {socket} from '../../service/socket.js';
 
 
 import {
-  Container, Row, Col, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter,
-  Form, FormGroup, Label, Input, FormText
+  Container, Row,  Button, Table, Modal, ModalHeader, ModalBody, ModalFooter,
+  Form, FormGroup, Label, Input
 } from 'reactstrap';
 
 
@@ -180,7 +180,7 @@ export default function Index() {
 
     const data = e.nome;
 
-    console.log(data);
+    //console.log(data);
 
     const res = await api.put(`fila/disponivel/${id}`, data);
 
@@ -195,7 +195,19 @@ export default function Index() {
     }
   }
 
+//   const review =  useCallback(
+//   () => {
+//      api.get('fila').then(
+//       response => {
+//         setListaFilaVendedor(response.data)
 
+//       }
+//     )
+
+//     aa();
+//   },
+//   [],
+// )
   async function review() {
     await api.get('fila').then(
       response => {
@@ -205,12 +217,14 @@ export default function Index() {
     )
 
     aa();
+
   }
 
-  const socket = io.connect('https://app-server-fila-gabriel.herokuapp.com/');
-  socket.on('join2', receiveinfo =>{
+  //const socket = io.connect('http://localhost:3000');
+  socket.on('join2', receiveinfo => {
     setN(receiveinfo);
-});
+    console.log(receiveinfo);
+  });
 
 
   useEffect(() => {
@@ -222,11 +236,19 @@ export default function Index() {
     )
   }, [n])
 
-
-
-
-
+  const aa = () => {
   
+      //const socket = io.connect('http://localhost:3000');
+      socket.emit('join2', 'Hello World from Fila2');
+      // socket.on('connect', function (data) {
+        
+      // }
+      // );
+
+    }
+
+
+
 
   const toggleInfo = () => setModalInfo(!modalInfo);
 
@@ -286,7 +308,7 @@ export default function Index() {
     else {
 
       toggleAt(e)
-      
+
     }
   }
 
@@ -302,7 +324,7 @@ export default function Index() {
     } else {
 
       toggleTel(e)
-      
+
     }
   }
 
@@ -335,7 +357,7 @@ export default function Index() {
     } else {
 
       toggleDel(e)
-      
+
     }
   }
 
@@ -351,7 +373,7 @@ export default function Index() {
 
     setModalTipoAtendimento(!modalTipoAtendimento)
 
-    
+
     // setModalConfDelNome(e.nome);
     //setModalConfDelId(e.id);
 
@@ -372,15 +394,8 @@ export default function Index() {
   }
 
 
-  const aa = (e) => {
-   
-     const socket = io.connect('https://app-server-fila-gabriel.herokuapp.com/');
-     socket.on('connect', function(data) {
-      socket.emit('join2', 'Hello World from Fila2');
-   }
-   );
-    
-  }
+
+
 
 
 
