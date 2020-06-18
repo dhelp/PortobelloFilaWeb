@@ -9,16 +9,16 @@ import {MenuPrincipal} from '../principal/menu/menu'
 
 
 import Button01 from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+//import IconButton from '@material-ui/core/IconButton';
 
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
 
 import Container from 'react-bootstrap/Container';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+// import Table from 'react-bootstrap/Table';
+// import Form from 'react-bootstrap/Form';
+// import Col from 'react-bootstrap/Col';
+// import Row from 'react-bootstrap/Row';
+// import Button from 'react-bootstrap/Button';
 
 
 
@@ -32,8 +32,8 @@ import api from '../services/api';
 
 export default function Mesa() {
 
-    const [mesa, setMesa] = useState('');
-    const [ramal, setRamal] = useState('');
+    // const [mesa, setMesa] = useState('');
+    // const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
 
     //console.log(listaMesa);
@@ -91,22 +91,22 @@ export default function Mesa() {
 
 
 
-    async function handMesa(e) {
-        e.preventDefault();
-        const data = { mesa, ramal };
-        const res = await api.post('mesa', data);
+    // async function handMesa(e) {
+    //     e.preventDefault();
+    //     const data = { mesa, ramal };
+    //     const res = await api.post('mesa', data);
 
-        if (res.status === 201) {
-            setMesa('');
-            setRamal('');
-            recall();
-            //alert("Mesa cadastrada com sucesso");
+    //     if (res.status === 201) {
+    //         setMesa('');
+    //         setRamal('');
+    //         recall();
+    //         //alert("Mesa cadastrada com sucesso");
 
 
-        } else if (res.status === 200) {
-            alert(res.data.error);
-        }
-    }
+    //     } else if (res.status === 200) {
+    //         alert(res.data.error);
+    //     }
+    // }
 
     async function handleClick(e) {
         //e.preventDefault();

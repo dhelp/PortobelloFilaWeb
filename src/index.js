@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+//import App from './App';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import Mesa from './pages/mesa';

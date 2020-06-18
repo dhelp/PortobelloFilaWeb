@@ -18,14 +18,14 @@ export default function MesaEdit(props) {
     const [id, setId] = useState(props.match.params.id);   
  const [ramal, setRamal] = useState([]); 
  const [mesa, setMesa] = useState([]); 
-   const [load, setLoad] = useState([]);
+   //const [load, setLoad] = useState([]);
 
     useEffect(() => {  
        
         const fetchData = async () => {
             console.log(`mesa/show/${id}`);
             const result =await api.get(`mesa/show/${id}`);
-            setLoad(result.data)
+            //setLoad(result.data)
             setId(result.data.id)
             setRamal(result.data.ramal)
             setMesa(result.data.mesa)
