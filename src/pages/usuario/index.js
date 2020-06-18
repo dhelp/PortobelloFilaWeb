@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React ,{ useState, useEffect }from 'react';
 import { Link } from 'react-router-dom'
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
 import {MenuPrincipal} from '../principal/menu/menu'
-
-
-
-
 import Button01 from '@material-ui/core/Button';
-//import IconButton from '@material-ui/core/IconButton';
-
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
-
 import Container from 'react-bootstrap/Container';
-// import Table from 'react-bootstrap/Table';
-// import Form from 'react-bootstrap/Form';
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
-// import Button from 'react-bootstrap/Button';
-
-
 
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import './usuariostyles.css';
 
 import api from '../services/api';
 
 
-export default function Mesa() {
+export default function Usuario() {
 
     // const [mesa, setMesa] = useState('');
     // const [ramal, setRamal] = useState('');
@@ -42,7 +28,7 @@ export default function Mesa() {
         text: 'AÇÃO',
         formatter: (cell, row, rowIndex, extraData) => (
             <div>
-                <Link to={`/mesa/show/${row.id}`}>
+                <Link to={`/usuario/show/${row.id}`}>
               <Button01  className="buttonAcao"
                                         startIcon={<EditOutlined/>}
                                         item={row.id}
@@ -69,18 +55,14 @@ export default function Mesa() {
       text: 'ID',
       hidden:true
     }, {
-      dataField: 'mesa',
-      text: 'MESA',
-      sort: true
-    }, {
-      dataField: 'ramal',
-      text: 'RAMAL',
+      dataField: 'nome_usuario',
+      text: 'NOME USUÁRIO',
       sort: true
     }];
 
 
   async  function recall() {    
-       await api.get('mesa').then(
+       await api.get('usuario').then(
             response => {
                 setaListaMesa(response.data)
             }
@@ -110,14 +92,14 @@ export default function Mesa() {
 
     async function handleClick(e) {
         //e.preventDefault();
-        await api.delete(`mesa/delete/${e}`);
+        await api.delete(`usuario/delete/${e}`);
         recall();
         
     }
 
 
     useEffect(() => {
-        api.get('mesa').then(
+        api.get('usuario').then(
             response => {
                 setaListaMesa(response.data)
                 //const rows = response.data
@@ -133,7 +115,7 @@ export default function Mesa() {
         <Container fluid>
 
             <MenuPrincipal />
-            <h1>Listagem de Mesas e Ramal</h1>
+            <h1>Listagem de Usuários</h1>
 
            
             <hr />
@@ -142,7 +124,7 @@ export default function Mesa() {
             <BootstrapTable keyField='id' 
                 data={ products } 
                 columns={ columns } 
-                noDataIndication="Não existe mesas cadastradas"
+                noDataIndication="Não existe usuários cadastrados"
                 striped
             hover
             condensed
@@ -151,8 +133,8 @@ export default function Mesa() {
             </div>
 
             
-            <Link to="/mesa/create">
-            <button className="buttonnovamesa" type="button" variant="success"> Cadastrar nova mesa</button>
+            <Link to="/usuario/create">
+            <button className="buttonnovamesa" type="button" variant="success" alt="Novo usuário"> Cadastrar Novo Usuário</button>
             
             </Link>
             <br />

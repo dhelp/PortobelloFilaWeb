@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React ,{ useState, useEffect }from 'react';
 import { Link } from 'react-router-dom'
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
 import {MenuPrincipal} from '../principal/menu/menu'
-
-
-
-
 import Button01 from '@material-ui/core/Button';
-//import IconButton from '@material-ui/core/IconButton';
-
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
-
 import Container from 'react-bootstrap/Container';
-// import Table from 'react-bootstrap/Table';
-// import Form from 'react-bootstrap/Form';
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
-// import Button from 'react-bootstrap/Button';
-
-
 
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import './auditoriastyles.css';
 
 import api from '../services/api';
 
 
-export default function Mesa() {
+export default function Usuario() {
 
     // const [mesa, setMesa] = useState('');
     // const [ramal, setRamal] = useState('');
@@ -39,48 +25,22 @@ export default function Mesa() {
     //console.log(listaMesa);
     const products = listaMesa;
     const columns = [ {
-        text: 'AÇÃO',
-        formatter: (cell, row, rowIndex, extraData) => (
-            <div>
-                <Link to={`/mesa/show/${row.id}`}>
-              <Button01  className="buttonAcao"
-                                        startIcon={<EditOutlined/>}
-                                        item={row.id}
-                                        
-                                    ></Button01>
-                                    </Link>
-
-
-                        
-                                    <Button01 className="buttonAcao"
-                                    startIcon={<DeleteOutline/>}
-                                    item={row.id}
-                                    onClick={() => handleClick(row.id)}
-                                    >   </Button01>
-
-            </div>
-          ),
-          headerStyle: (column, colIndex) => {
-            return { width: '13%',  }; 
-        },
-        align:'center'
-      },{
       dataField: 'id',
       text: 'ID',
       hidden:true
     }, {
-      dataField: 'mesa',
-      text: 'MESA',
+      dataField: 'data_log',
+      text: 'DATA',
       sort: true
     }, {
-      dataField: 'ramal',
-      text: 'RAMAL',
+      dataField: 'descricao',
+      text: 'AÇÃO',
       sort: true
     }];
 
 
   async  function recall() {    
-       await api.get('mesa').then(
+       await api.get('auditoria').then(
             response => {
                 setaListaMesa(response.data)
             }
@@ -117,7 +77,7 @@ export default function Mesa() {
 
 
     useEffect(() => {
-        api.get('mesa').then(
+        api.get('auditoria').then(
             response => {
                 setaListaMesa(response.data)
                 //const rows = response.data
@@ -133,7 +93,7 @@ export default function Mesa() {
         <Container fluid>
 
             <MenuPrincipal />
-            <h1>Listagem de Mesas e Ramal</h1>
+            <h1>Auditoria</h1>
 
            
             <hr />
@@ -142,7 +102,7 @@ export default function Mesa() {
             <BootstrapTable keyField='id' 
                 data={ products } 
                 columns={ columns } 
-                noDataIndication="Não existe mesas cadastradas"
+                noDataIndication="Não existe usuários cadastrados"
                 striped
             hover
             condensed
@@ -151,18 +111,14 @@ export default function Mesa() {
             </div>
 
             
-            <Link to="/mesa/create">
-            <button className="buttonnovamesa" type="button" variant="success"> Cadastrar nova mesa</button>
             
-            </Link>
-            <br />
+            
+
+            
             <Link to="/">
             <button className="buttonnovamesa" type="button" variant="warnning"> Voltar</button>
             
             </Link>
-
-            
-
         </Container>
 
 

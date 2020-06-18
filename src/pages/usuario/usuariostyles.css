@@ -1,0 +1,102 @@
+
+
+
+
+
+h1 {
+    font-size: 25px;
+    color: black;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.buttonnovamesa {
+    position: relative;
+    height: 45px;
+    width: 250px;
+    display: inline-block;
+    text-decoration: none ;
+    border: 0;
+    transition: 0.2s;
+    border-radius: 0.2em;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+    
+}
+
+.buttonsalvar {
+    position: relative;
+    height: 45px;
+    width: 100%;
+    display: inline-block;
+    text-decoration: none ;
+    border: 0;
+    transition: 0.2s;
+    border-radius: 0.2em;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.buttonsalvar:hover{
+    filter: brightness(90%);
+}
+
+.cadastro {
+    width: 300px;
+     margin-top: 25px ;
+    margin-bottom: 25px ;
+    position:relative;  
+    display: block;
+
+}
+
+.mesa-content .cadastro .row label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+.mesa-content .cadastro input{
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    height: 45px;
+}
+
+.listagem{
+    margin-top: 25px;
+    list-style:none;
+    
+}
+
+.mesa-content .cadastro .row{
+    margin-top: 10px;
+}
+
+.listagem ul {
+    display: grid;
+}
+
+.listagem ul li{
+    list-style-type: none;
+    
+}
+
+
+
+.buttonAcao {
+    text-align: center
+}
+
+
+
+
+
+

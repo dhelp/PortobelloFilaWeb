@@ -19,7 +19,10 @@ export const MenuPrincipal = () => {
     <Nav className="mr-auto">
     <Link  to='/' className='nav-link'>Home</Link>
     <Link  to='fila' className='nav-link'>Fila</Link>
+    <Link  to='vendedor' className='nav-link'>Vendedor(a)</Link>
     <Link  to='mesa' className='nav-link'>Mesa</Link>
+    <Link  to='auditoria' className='nav-link'>Auditoria</Link>
+    <Link  to='usuario' className='nav-link'>Usuários</Link>
 
       {/* <Nav.Link href="#home">Home</Nav.Link>
       <Nav.Link href="#link">Link</Nav.Link>
