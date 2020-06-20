@@ -4,7 +4,11 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 
 import api from '../services/api';
 
-import Container from 'react-bootstrap/Container';
+import {
+    Container
+  } from 'reactstrap';
+
+  import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -62,7 +66,7 @@ export default function Show() {
     return (
 
 
-        <Container fluid>
+        <Container className='content'>
 
             <h1>Cadastrar Usuário</h1>
             <hr />

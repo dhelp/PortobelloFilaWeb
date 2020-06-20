@@ -2,15 +2,17 @@ import React ,{ useState, useEffect }from 'react';
 import { Link } from 'react-router-dom'
 
 import {
-    ButtonToggle 
+    ButtonToggle ,
+    Container
   } from 'reactstrap';
+
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
 import {MenuPrincipal} from '../principal/menu/menu'
 import Button01 from '@material-ui/core/Button';
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
-import Container from 'react-bootstrap/Container';
+//import Container from 'react-bootstrap/Container';
 
 
 
@@ -26,7 +28,7 @@ export default function Vendedor() {
     // const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
 
-    console.log(listaMesa);
+    //console.log(listaMesa);
     const products = listaMesa;
     const columns = [ {
         text: 'AÇÃO',
@@ -116,7 +118,7 @@ export default function Vendedor() {
     return (
 
         
-        <Container fluid>
+        <Container  className="content">
 
             <MenuPrincipal />
             <h1>Listagem de Vendedores</h1>

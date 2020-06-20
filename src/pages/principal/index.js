@@ -1,24 +1,12 @@
 import React  from 'react';
-// import { Link } from 'react-router-dom'
 import {  Switch, Route } from 'react-router-dom'
-//import io from 'socket.io-client';
 
-//import {socket} from '../../service/socket.js';
+import {
+    Container
+  } from 'reactstrap';
+
 
 import { MenuPrincipal } from '../principal/menu/menu'
-
-// import Mesa from '../mesa/index';
-// import MesaCreate from '../mesa/mesacreate';
-// import MesaEdit from '../mesa/mesaedit';
-
-
-// import Fila from '../fila/index';
-
-
-
-
-import Container from 'react-bootstrap/Container';
-//import Button from 'react-bootstrap/Button';
 
 export default function Principal() {
 
@@ -62,21 +50,17 @@ export default function Principal() {
     // }
 
     return (
-        <Container fluid>
+        <Container  className="content">
             <div className="App">
                 <Route>
 
                     <MenuPrincipal />
                     {/* <Button onClick={sendSocketServer}>{msg}</Button> */}
                     <Switch>
-
-
-
                     </Switch>
 
                 </Route>
             </div>
-
         </Container>
 
 

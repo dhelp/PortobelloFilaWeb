@@ -17,11 +17,11 @@ import { green, blue, red, yellow } from '@material-ui/core/colors';
 
 
 
-import {socket} from '../../service/socket.js';
+import { socket } from '../../service/socket.js';
 
 
 import {
-  Container, Row,  Button, Table, Modal, ModalHeader, ModalBody, ModalFooter,
+  Container, Row, Button, Modal, ModalHeader, ModalBody, ModalFooter,
   Form, FormGroup, Label, Input
 } from 'reactstrap';
 
@@ -31,8 +31,6 @@ import api from '../services/api';
 
 
 import './stylefila.css';
-
-import 'bootstrap/dist/css/bootstrap.css';
 
 
 
@@ -187,7 +185,7 @@ export default function Index() {
     if (res.status === 204) {
 
       review();
-     // console.log(res.status);
+      // console.log(res.status);
       setModalConfDi(false)
 
     } else if (res.status === 200) {
@@ -195,19 +193,19 @@ export default function Index() {
     }
   }
 
-//   const review =  useCallback(
-//   () => {
-//      api.get('fila').then(
-//       response => {
-//         setListaFilaVendedor(response.data)
+  //   const review =  useCallback(
+  //   () => {
+  //      api.get('fila').then(
+  //       response => {
+  //         setListaFilaVendedor(response.data)
 
-//       }
-//     )
+  //       }
+  //     )
 
-//     aa();
-//   },
-//   [],
-// )
+  //     aa();
+  //   },
+  //   [],
+  // )
   async function review() {
     await api.get('fila').then(
       response => {
@@ -236,16 +234,22 @@ export default function Index() {
     )
   }, [n])
 
-  const aa = () => {
   
+
+  const aa = () => {
+    try {
+
+
       //const socket = io.connect('http://localhost:3000');
       socket.emit('join2', 'Hello World from Fila2');
       // socket.on('connect', function (data) {
-        
-      // }
-      // );
-
+    } catch (error) {
+      alert(error);
     }
+    // }
+    // )
+
+  }
 
 
 
@@ -405,70 +409,71 @@ export default function Index() {
 
     <Container className="content">
 
-      <Row>
 
-        <div class="table-responsive">
-          {/* <Button onClick={() => aa()}>clique aqui {n}</Button> */}
-          <Table bordered id="listafila">
-            <thead>
+      {/* <Row> */}
+      {/* class="table-responsive" */}
+      {/* <div  > */}
+      {/* <Button onClick={() => aa()}>clique aqui {n}</Button> */}
+      <table className="ui celled striped blue table">
+        <thead>
 
-              <tr>
-                <th>STATUS</th>
-                <th>HORA</th>
-                <th>VENDEDOR(A)</th>
-                <th>RAMAL</th>
-                <th>AÇÃO</th>
+          <tr>
+            <th>STATUS</th>
+            <th>HORA</th>
+            <th>VENDEDOR(A)</th>
+            <th>RAMAL</th>
+            <th>AÇÃO</th>
 
-              </tr>
-            </thead>
-            <tbody>
+          </tr>
+        </thead>
+        <tbody>
 
-              {listaFilaVendedor.map(fila => (
-                <tr key={fila.id}>
-                  <th >
+          {listaFilaVendedor.map(fila => (
+            <tr key={fila.id}>
+              <th >
 
-                    {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> :
-                      fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /> :
-                        fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /> :
-                          fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} /> :
-                            ''}
-                    {' '}
-                    {fila.status}</th>
-                  <td class="visible-sm visible-lg">{formataHora(fila.data_entrada)}</td>
-                  <td>{fila.nome_vendedor}</td>
-                  <td>{fila.ramal}</td>
-                  <td >
-                    <div id="mmacao">
-                      <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
-                      <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
-                      <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
+                {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> :
+                  fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /> :
+                    fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /> :
+                      fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} /> :
+                        ''}
+                {' '}
+                {fila.status}</th>
+              <td>{formataHora(fila.data_entrada)}</td>
+              <td>{fila.nome_vendedor}</td>
+              <td>{fila.ramal}</td>
+              <td >
+                {/* <div id="mmacao"> */}
+                <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
+                <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
+                <Button outline size="sm" onClick={(e) => setTelefone({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /></Button>
 
-                      <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
-                    </div>
-                  </td>
+                <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
+                {/* </div> */}
+              </td>
 
-                </tr>
-
-
-              ))}
+            </tr>
 
 
-            </tbody>
-            <tfoot>
-              <tr >
-
-                <td colspan="5">
-
-                  <Button outline color="success" onClick={(e) => toggle()}><span><AddCircleOutlineIcon style={{ color: green[500] }}
-                    fontSize="large" /></span> ADICIONAR VENDEDOR(A)</Button>
-                </td>
-              </tr>
-            </tfoot>
-          </Table>
-        </div>
+          ))}
 
 
-      </Row>
+        </tbody>
+        <tfoot>
+          <tr >
+
+            <th colSpan="5">
+
+              <Button outline color="success" onClick={(e) => toggle()}><span><AddCircleOutlineIcon style={{ color: green[500] }}
+                fontSize="large" /></span> ADICIONAR VENDEDOR(A)</Button>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+      {/* </div> */}
+
+
+      {/* </Row> */}
       <Row>
         <Link to="/"><Button color="primary">VOLTAR</Button></Link>
 
@@ -561,7 +566,7 @@ export default function Index() {
       </Modal>
 
 
-      <Modal returnFocusAfterClose='false' isOpen={modalInfo} fade={false} toggle={toggleInfo} >
+      <Modal isOpen={modalInfo} fade={false} toggle={toggleInfo} >
         <ModalHeader className='hedinfo' toggle={toggleInfo}>ALERTA</ModalHeader>
         <ModalBody>
           {msgInfo}
@@ -572,7 +577,7 @@ export default function Index() {
         </ModalFooter>
       </Modal>
 
-      <Modal returnFocusAfterClose='true' isOpen={modalTipoAtendimento} fade={false} >
+      <Modal isOpen={modalTipoAtendimento} fade={false} >
         <ModalHeader  >< ContactPhoneIcon style={{ color: blue[500], fontSize: 45 }} /> Informe o tipo de atendimento:</ModalHeader>
         <ModalBody>
           <div id='divmodalsetretorno'>

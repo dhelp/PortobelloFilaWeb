@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
+import {
+    Container
+  } from 'reactstrap';
+
 import BootstrapTable from 'react-bootstrap-table-next';
 
 import {MenuPrincipal} from '../principal/menu/menu'
@@ -13,7 +17,7 @@ import Button01 from '@material-ui/core/Button';
 
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
 
-import Container from 'react-bootstrap/Container';
+
 // import Table from 'react-bootstrap/Table';
 // import Form from 'react-bootstrap/Form';
 // import Col from 'react-bootstrap/Col';
@@ -130,7 +134,7 @@ export default function Mesa() {
     return (
 
         
-        <Container fluid>
+        <Container className='content'>
 
             <MenuPrincipal />
             <h1>Listagem de Mesas e Ramal</h1>

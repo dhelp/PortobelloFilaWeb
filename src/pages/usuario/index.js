@@ -6,11 +6,13 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import {MenuPrincipal} from '../principal/menu/menu'
 import Button01 from '@material-ui/core/Button';
 import { EditOutlined, DeleteOutline } from '@material-ui/icons';
-import Container from 'react-bootstrap/Container';
+import {
+    Container
+  } from 'reactstrap';
 
 
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './usuariostyles.css';
 
 import api from '../services/api';
@@ -112,7 +114,7 @@ export default function Usuario() {
     return (
 
         
-        <Container fluid>
+        <Container className='content'>
 
             <MenuPrincipal />
             <h1>Listagem de Usuários</h1>

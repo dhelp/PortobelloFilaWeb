@@ -9,6 +9,8 @@ import MesaEdit from './pages/mesa/mesaedit';
 import Principal from './pages/principal/';
 import Fila from './pages/fila/index';
 
+import filanova from './pages/filanova/index';
+
 import Vendedor from './pages/vendedor/index';
 import vendedorcreate from './pages/vendedor/create';
 import vendedorshow from './pages/vendedor/show';
@@ -18,8 +20,6 @@ import usuariocreate from './pages/usuario/create';
 import usuarioshow from './pages/usuario/show';
 
 import auditoria from './pages/auditoria/index';
-
-
 
 
 ReactDOM.render(
@@ -32,6 +32,9 @@ ReactDOM.render(
             <Route path="/mesa/show/:id" component={MesaEdit} />
 
             <Route path="/fila" component={Fila} />
+            <Route path="/filanova" component={filanova} />
+
+            
 
 
             <Route path="/vendedor" exact={true} component={Vendedor} />

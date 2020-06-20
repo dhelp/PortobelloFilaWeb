@@ -1,43 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-//import NavDropdown from 'react-bootstrap/NavDropdown'
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem
+} from 'reactstrap';
 
 
 export const MenuPrincipal = () => {
 
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggle = () => setIsOpen(!isOpen);
 
-    return (
-<div className="menu">
-<Navbar bg="light" expand="lg">
-  <Navbar.Brand >Fila Gabriel</Navbar.Brand>
-  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-  <Navbar.Collapse id="basic-navbar-nav">
-    <Nav className="mr-auto">
-    <Link  to='/' className='nav-link'>Home</Link>
-    <Link  to='fila' className='nav-link'>Fila</Link>
-    <Link  to='vendedor' className='nav-link'>Vendedor(a)</Link>
-    <Link  to='mesa' className='nav-link'>Mesa</Link>
-    <Link  to='auditoria' className='nav-link'>Auditoria</Link>
-    <Link  to='usuario' className='nav-link'>Usuários</Link>
+  return (
+    
+    <div>
+    <Navbar color="light" light expand="md">
+      <NavbarBrand href="/">Fila Gabriel</NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="mr-auto" navbar>
+          <NavItem>
+          <Link to='fila' className='nav-link'>Fila</Link>
+          </NavItem>
+          <NavItem>
+          <Link to='filanova' className='nav-link'>FILA NOVA</Link>
+          </NavItem>
 
-      {/* <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#link">Link</Nav.Link>
-      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown> */}
-    </Nav>
-   
-  </Navbar.Collapse>
-</Navbar>
-</div>
-
-    )
+          <NavItem>
+          <Link to='vendedor' className='nav-link'>Vendedor(a)</Link>            
+          </NavItem>
+          <NavItem>
+            <Link to='mesa' className='nav-link'>Mesa</Link>
+            </NavItem>
+            <NavItem>
+            <Link to='auditoria' className='nav-link'>Auditoria</Link>
+            </NavItem>
+            <NavItem>
+            <Link to='usuario' className='nav-link'>Usuários</Link>
+            </NavItem>
+          
+        </Nav>
+       
+      </Collapse>
+    </Navbar>
+  </div>
+  )
 }
