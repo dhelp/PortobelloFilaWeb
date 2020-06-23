@@ -1,15 +1,25 @@
 import React from 'react';
 
-
-
-import './pages/global.css'
-
 import Routes from './routes'
+
 
 function App() {
   return (
-   <Routes /> 
+  //   <div className="App">
+  //   <div>
+  //   <Welcome name="Sara" />
+  //   <Welcome name="Cahal" />
+  //   <Welcome name="Edite" />
+  // </div>
+  // </div>
    
+  //      <MenuPrincipal />
+
+  //     <Switch>
+  //     </Switch>
+
+  //     <Route/>
+    
   );
 }
 

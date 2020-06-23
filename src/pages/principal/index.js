@@ -1,19 +1,47 @@
-import React  from 'react';
-import {  Switch, Route } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom'
 
 import {
     Container
-  } from 'reactstrap';
+} from 'reactstrap';
 
 
 import { MenuPrincipal } from '../principal/menu/menu'
 
+
+
 export default function Principal() {
 
 
+    // class MyErrorBoundary extends Component {
+    //     state = {
+    //         errorMessage: ''
+    //     }
+    //     static getDerivedStateFromError(error) {
+    //         return { errorMessage: error.toString() }
+    //     }
+    //     componentDidCatch(error, info) {
+    //         this.logErrorToServices(error.toString(), info.componentStack)
+    //     }
+    //     // A fake logging service 😬
+    //     logErrorToServices = console.log
+    //     render() {
+    //         if (this.state.errorMessage) {
+    //             return (
+    //                 <p>
+    //                     {this.state.errorMessage}
+    //                 </p>
+    //             )
+    //         }
+    //         return this.props.children
+    //     }
+    // }
 
+    // class BuggyCounter extends Component {
+    //     // nothing was modified :P
+    // }
 
-   // const [msg, setMsg] = useState('não clicado');
+    // const [msg, setMsg] = useState('não clicado');
 
     // const sendSocketServer = useCallback(
     //     () => {
@@ -22,7 +50,7 @@ export default function Principal() {
 
     //         socket.on('join', receiveinfo => {
     //             setMsg(receiveinfo);
-        
+
     //             // setTimeout(() => {
     //             //     setMsg('não clicado')
     //             // }, 5000);
@@ -41,7 +69,7 @@ export default function Principal() {
     //     }, 5000);
     // });
 
-   
+
 
 
     // function sendSocketServer() {
@@ -50,14 +78,17 @@ export default function Principal() {
     // }
 
     return (
-        <Container  className="content">
+        <Container className="content">
             <div className="App">
+                {/* <MyErrorBoundary>
+                    <BuggyCounter />
+                </MyErrorBoundary> */}
                 <Route>
 
                     <MenuPrincipal />
                     {/* <Button onClick={sendSocketServer}>{msg}</Button> */}
                     <Switch>
-                    </Switch>
+                    </Switch> 
 
                 </Route>
             </div>

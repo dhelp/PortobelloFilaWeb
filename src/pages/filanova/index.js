@@ -53,7 +53,7 @@ export default function Index() {
   const [modalTipoAtendimento, setModalTipoAtendimento] = useState(false);
   const [modalConfDelId, setModalConfDelId] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
-  const [n, setN] = useState([]);
+  //const [n, setN] = useState([]);
 
 
 
@@ -73,10 +73,10 @@ export default function Index() {
 
 
 
-    if (vendedor_id == 0) {
+    if (vendedor_id === 0) {
       setMsgInfo('Selecione um(a) vendedor(a)');
       toggleInfo()
-    } else if (mesa_id == 0) {
+    } else if (mesa_id === 0) {
       setMsgInfo('Selecione uma mesa.');
       toggleInfo()
     }
@@ -232,7 +232,7 @@ export default function Index() {
 
       }
     )
-  }, [n])
+  }, [])
 
   const aa = () => {
 
@@ -295,11 +295,11 @@ export default function Index() {
 
   const setAtendimento = (e) => {
 
-    if (e.id_status == 2) {
+    if (e.id_status === 2) {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
       toggleInfo()
 
-    } else if (e.id_status == 3) {
+    } else if (e.id_status === 3) {
       setMsgInfo('Ação não permitida. Deixe o(a) vendedor(a) ' + e.nome + ' disponível primeiro.');
       toggleInfo()
     }
@@ -312,11 +312,11 @@ export default function Index() {
 
   const setTelefone = (e) => {
 
-    if (e.id_status == 3) {
+    if (e.id_status === 3) {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está ao telefone.`);
       toggleInfo()
 
-    } else if (e.id_status == 2) {
+    } else if (e.id_status === 2) {
       setMsgInfo(`Ação não permitida. \n Deixe o(a) vendedor(a) '${e.nome}' disponível primeiro.`);
       toggleInfo()
     } else {
@@ -328,10 +328,10 @@ export default function Index() {
 
   const setDisponivel = (e) => {
 
-    if (e.id_status == 1) {
+    if (e.id_status === 1) {
       setMsgInfo(`O(a) vendedor(a) '${e.nome}' já está disponível.`);
       toggleInfo()
-    } else if (e.id_status == 3) {
+    } else if (e.id_status === 3) {
 
       toggleDi(e)
     }
@@ -349,7 +349,7 @@ export default function Index() {
 
   const setSairDaFila = (e) => {
 
-    if (e.id_status == 2) {
+    if (e.id_status === 2) {
       setMsgInfo(`Ação não permitida. O(a) vendedor(a) '${e.nome}' já está em atendimento.`);
       toggleInfo()
     } else {
