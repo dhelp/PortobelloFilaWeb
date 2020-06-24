@@ -9,10 +9,24 @@ import {
 import { MenuPrincipal } from '../principal/menu/menu'
 
 
+import MyBoundary from '../services/MyBoundary';
+
+
+
+
 
 export default function Principal() {
 
-
+class DispacthError extends React.Component {
+    componentDidMount = async () => {
+      try {
+        const response = await fetch('https://fake.url'); // fake url to crash
+  
+      } catch(e) {
+        throw new Error(e.toString()); // throwing a new error
+      }
+    }
+}
     // class MyErrorBoundary extends Component {
     //     state = {
     //         errorMessage: ''
@@ -89,6 +103,10 @@ export default function Principal() {
                     {/* <Button onClick={sendSocketServer}>{msg}</Button> */}
                     <Switch>
                     </Switch> 
+
+                    <MyBoundary>
+    <DispacthError />
+  </MyBoundary>
 
                 </Route>
             </div>

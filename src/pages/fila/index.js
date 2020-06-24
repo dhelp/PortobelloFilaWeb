@@ -232,7 +232,7 @@ export default function Index() {
 
       }
     )
-  }, [n])
+  }, [])
 
   
 
@@ -439,7 +439,7 @@ export default function Index() {
                         ''}
                 {' '}
                 {fila.status}</th>
-              <td>{formataHora(fila.data_entrada)}</td>
+              <td>{fila.data_entrada}</td>
               <td>{fila.nome_vendedor}</td>
               <td>{fila.ramal}</td>
               <td >
