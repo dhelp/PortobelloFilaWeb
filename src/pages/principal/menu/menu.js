@@ -29,10 +29,6 @@ export const MenuPrincipal = () => {
           <Link to='fila' className='nav-link'>Fila</Link>
           </NavItem>
           <NavItem>
-          <Link to='filanova' className='nav-link'>FILA NOVA</Link>
-          </NavItem>
-
-          <NavItem>
           <Link to='vendedor' className='nav-link'>Vendedor(a)</Link>            
           </NavItem>
           <NavItem>

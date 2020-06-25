@@ -29,6 +29,7 @@ export default function Routes(){
 
 
                 <Route path="/fila" exact={true}  component={Fila} />
+
                 <Route path='/mesa' exact component={Mesa} />
                 <Route path='/mesa/create'  component={MesaCreate} />          
                 <Route path='/mesa/show'  component={MesaEdit} />
@@ -43,13 +44,6 @@ export default function Routes(){
                 <Route path='/usuario/show'  component={usuarioshow} />
 
                 <Route path='/auditoria'  component={auditoria} />
-
-                
-
-            
-                
-
-          
                 
             </Switch>
         </BrowserRouter>

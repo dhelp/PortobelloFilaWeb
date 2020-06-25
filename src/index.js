@@ -9,7 +9,6 @@ import MesaEdit from './pages/mesa/mesaedit';
 import Principal from './pages/principal/';
 import Fila from './pages/fila/index';
 
-import filanova from './pages/filanova/index';
 
 import Vendedor from './pages/vendedor/index';
 import vendedorcreate from './pages/vendedor/create';
@@ -32,7 +31,6 @@ ReactDOM.render(
             <Route path="/mesa/show/:id" component={MesaEdit} />
 
             <Route path="/fila" component={Fila} />
-            <Route path="/filanova" component={filanova} />
 
             
 
