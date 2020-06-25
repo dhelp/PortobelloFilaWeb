@@ -268,7 +268,7 @@ export default function Index() {
 
       }
     )
-  }, [])
+  }, [n])
 
 
   useEffect(() => {
@@ -278,7 +278,7 @@ export default function Index() {
 
       }
     )
-  }, [])
+  }, [n])
 
 
 
