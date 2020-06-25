@@ -54,6 +54,8 @@ export default function Index() {
   const [modalConfDelId, setModalConfDelId] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
   const [n, setN] = useState([]);
+  const [ttelefone, setTtelefone] = useState(0);
+  const [somaatedimento, setSomaAtendimento] = useState(0);
 
 
 
@@ -215,13 +217,38 @@ export default function Index() {
     )
 
     aa();
+    somaTelefone();
+    somaAtendimento();
+  }
+
+
+  async function somaTelefone() {
+    await api.get('fila/somatelefone').then(
+      response => {
+        setTtelefone(response.data.totaltelefonedia)
+
+      }
+    )
 
   }
+
+
+  async function somaAtendimento() {
+    await api.get('fila/somaatendimento').then(
+      response => {
+        setSomaAtendimento(response.data.totalatendimento)
+
+      }
+    )
+
+  }
+
+
 
   //const socket = io.connect('http://localhost:3000');
   socket.on('join2', receiveinfo => {
     setN(receiveinfo);
-    console.log(receiveinfo);
+    //console.log(receiveinfo);
   });
 
 
@@ -234,7 +261,27 @@ export default function Index() {
     )
   }, [n])
 
-  
+  useEffect(() => {
+    api.get('fila/somatelefone').then(
+      response => {
+        setTtelefone(response.data.totaltelefonedia)
+
+      }
+    )
+  }, [])
+
+
+  useEffect(() => {
+    api.get('fila/somaatendimento').then(
+      response => {
+        setSomaAtendimento(response.data.totalatendimento)
+
+      }
+    )
+  }, [])
+
+
+
 
   const aa = () => {
     try {
@@ -404,7 +451,6 @@ export default function Index() {
 
 
 
-
   return (
 
     <Container className="content">
@@ -442,7 +488,7 @@ export default function Index() {
               <td>{fila.data_entrada}</td>
               <td>{fila.nome_vendedor}</td>
               <td>{fila.ramal}</td>
-              <td >
+              <td style={{ 'display': 'flex', 'justifyContent': 'space-around' }}>
                 {/* <div id="mmacao"> */}
                 <Button outline size="sm" onClick={(e) => setDisponivel({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><Brightness1Icon style={{ color: green[500], fontSize: 25 }} /></Button>
                 <Button outline size="sm" onClick={(e) => setAtendimento({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}><RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /></Button>
@@ -462,11 +508,16 @@ export default function Index() {
         <tfoot>
           <tr >
 
-            <th colSpan="5">
+            <th colSpan="1">
 
               <Button outline color="success" onClick={(e) => toggle()}><span><AddCircleOutlineIcon style={{ color: green[500] }}
                 fontSize="large" /></span> ADICIONAR VENDEDOR(A)</Button>
             </th>
+
+            <th colSpan="2">{somaatedimento === 0 ? 'Nenhum atendimento ' : somaatedimento === 1 ? somaatedimento + ' Atendimento ' : somaatedimento + ' Atendimentos '} hoje</th>
+            <th colSpan="2">{ttelefone === 0 ? 'Nenhum telefonema ' : ttelefone === 1 ? ttelefone + ' Telefonema ' : ttelefone + ' Telefonemas '} hoje</th>
+
+
           </tr>
         </tfoot>
       </table>
