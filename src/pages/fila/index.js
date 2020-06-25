@@ -221,7 +221,7 @@ export default function Index() {
   //const socket = io.connect('http://localhost:3000');
   socket.on('join2', receiveinfo => {
     setN(receiveinfo);
-    //console.log(receiveinfo);
+    console.log(receiveinfo);
   });
 
 
@@ -232,7 +232,7 @@ export default function Index() {
 
       }
     )
-  }, [])
+  }, [n])
 
   
 
