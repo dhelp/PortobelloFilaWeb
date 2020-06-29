@@ -20,32 +20,36 @@ import usuarioshow from './pages/usuario/show';
 
 import auditoria from './pages/auditoria/index';
 
+import login from './pages/login/login';
+
+import PrivateRoute from './pages/services/privateroute';
+
 
 ReactDOM.render(
   <BrowserRouter>
   <React.StrictMode>
       <Switch>
-            <Route path="/" exact={true} component={Principal} />
-            <Route path="/mesa" exact={true} component={Mesa} />
-            <Route path="/mesa/create" component={MesaCreate} />
-            <Route path="/mesa/show/:id" component={MesaEdit} />
+            <PrivateRoute path="/" exact={true} component={Principal} />
+            <PrivateRoute path="/mesa" exact={true} component={Mesa} />
+            <PrivateRoute path="/mesa/create" component={MesaCreate} />
+            <PrivateRoute path="/mesa/show/:id" component={MesaEdit} />
 
-            <Route path="/fila" component={Fila} />
+            <PrivateRoute path="/fila" component={Fila} />
 
+            <PrivateRoute path="/vendedor" exact={true} component={Vendedor} />
+            <PrivateRoute path="/vendedor/create" component={vendedorcreate} />
+            <PrivateRoute path="/vendedor/show/:id" component={vendedorshow} />
             
 
 
-            <Route path="/vendedor" exact={true} component={Vendedor} />
-            <Route path="/vendedor/create" component={vendedorcreate} />
-            <Route path="/vendedor/show/:id" component={vendedorshow} />
-            
+            <PrivateRoute path="/usuario" exact={true} component={usuario} />
+            <PrivateRoute path="/usuario/create" component={usuariocreate} />
+            <PrivateRoute path="/usuario/show/:id" component={usuarioshow} />
+
+            <PrivateRoute path="/auditoria" component={auditoria} />
 
 
-            <Route path="/usuario" exact={true} component={usuario} />
-            <Route path="/usuario/create" component={usuariocreate} />
-            <Route path="/usuario/show/:id" component={usuarioshow} />
-
-            <Route path="/auditoria" component={auditoria} />
+            <Route path="/login" exact={true} component={login} />
 
             
         </Switch>

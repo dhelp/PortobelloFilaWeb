@@ -22,6 +22,7 @@ export default function Show() {
 
 
     const [nome_usuario, setNome_usuario] = useState([]);
+    const [senha_usuario, setSenha_usuario] = useState([]);
 
 
     // useEffect(() => {
@@ -86,7 +87,20 @@ export default function Show() {
                                 defaultValue={nome_usuario}
                                 onChange={e => setNome_usuario(e.target.value)}
                             />
+                            
                         </Form.Group>
+                        <Form.Group controlId="formGroupMesa">
+                            <Form.Label>SENHA</Form.Label>
+                            <Form.Control
+                                type="password"
+                                autoComplete="new-password"
+                                name="senha_usuario"
+                                defaultValue={senha_usuario}
+                                onChange={e => setSenha_usuario(e.target.value)}
+                            />
+                            
+                        </Form.Group>
+                        
 
 
 

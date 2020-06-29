@@ -17,10 +17,12 @@ import usuarioshow from './pages/usuario/show'
 
 import Fila from './pages/fila/index';
 
+import login from './pages/login/login';
+
 
 import auditoria from './pages/auditoria/index';
 
-
+import PrivateRoute from './pages/services/privateroute';
 
 export default function Routes(){
     return(
@@ -43,7 +45,9 @@ export default function Routes(){
                 <Route path='/usuario/create'  component={usuariocreate} />
                 <Route path='/usuario/show'  component={usuarioshow} />
 
-                <Route path='/auditoria'  component={auditoria} />
+                <Route path='/login' exact={true}   component={login} />
+
+                <PrivateRoute path='/auditoria'  component={auditoria} />
                 
             </Switch>
         </BrowserRouter>

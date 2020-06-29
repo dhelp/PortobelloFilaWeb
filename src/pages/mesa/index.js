@@ -40,6 +40,11 @@ export default function Mesa() {
     // const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
 
+
+    const token = localStorage.getItem('app-token');
+
+    console.log(token);
+
     //console.log(listaMesa);
     const products = listaMesa;
     const columns = [ {
@@ -84,7 +89,11 @@ export default function Mesa() {
 
 
   async  function recall() {    
-       await api.get('mesa').then(
+       await api.get('mesa' ,{
+        headers: {
+            Authorization: `Bearer ${token}` 
+        }
+        }).then(
             response => {
                 setaListaMesa(response.data)
             }
@@ -121,7 +130,11 @@ export default function Mesa() {
 
 
     useEffect(() => {
-        api.get('mesa').then(
+        api.get('mesa' ,{
+        headers: {
+            Authorization: `Bearer ${token}` 
+        }
+        }).then(
             response => {
                 setaListaMesa(response.data)
                 //const rows = response.data
