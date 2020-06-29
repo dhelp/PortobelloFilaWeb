@@ -11,6 +11,7 @@ import {
     Form, FormGroup, Label, Input
 } from 'reactstrap';
 
+import logo from '../../assets/pbshop-logo.svg'
 
 import './stylelogin.css'
 
@@ -103,14 +104,12 @@ export default function Login() {
 
 
     return (
-        <Container className="content">
-        <div className="login">
-            <div className="card card-container" style={{'padding': '10px'}}>
-                <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
+        
+        <div className="limiter">
+        <div className="container-login100">
+        <div className="wrap-login100">
+            
+            
 
                 <Form
                     onSubmit={handleLogin}
@@ -155,6 +154,9 @@ export default function Login() {
                 </Form>
             </div>
         </div>
-        </Container>
+        </div>
+        
+     
+      
     );
 }
