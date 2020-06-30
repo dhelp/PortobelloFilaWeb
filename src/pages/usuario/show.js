@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { Link, useHistory , useParams} from 'react-router-dom'
 
 
 import api from '../services/api';
@@ -13,10 +13,10 @@ import Row from 'react-bootstrap/Row';
 
 export default function Show() {
     const { id } = useParams();
-    const history = useHistory();
-    
 
-   
+ 
+    const history = useHistory();
+
 
     const [idUsuario, setIdUsuario] = useState(id);
     const [nome_usuario, setNome_usuario] = useState([]);

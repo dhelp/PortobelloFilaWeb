@@ -59,12 +59,6 @@ export default function Index() {
 
 
 
-  function formataHora(dt) {
-    var today = new Date(Date.parse(dt.replace(/\s/, 'T') + 'Z'));
-
-    var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0')
-    return time;
-  }
 
 
 
@@ -75,10 +69,10 @@ export default function Index() {
 
 
 
-    if (vendedor_id == 0) {
+    if (vendedor_id === 0) {
       setMsgInfo('Selecione um(a) vendedor(a)');
       toggleInfo()
-    } else if (mesa_id == 0) {
+    } else if (mesa_id === 0) {
       setMsgInfo('Selecione uma mesa.');
       toggleInfo()
     }
@@ -525,10 +519,10 @@ export default function Index() {
 
 
       {/* </Row> */}
-      <Row>
+      {/* <Row> */}
         <Link to="/"><Button color="primary">VOLTAR</Button></Link>
 
-      </Row>
+      {/* </Row> */}
 
       <Modal isOpen={modal} fade={false} toggle={togleModalOff} >
         <ModalHeader toggle={togleModalOff}>ADICIONAR VENDEDOR(A) NA FILA</ModalHeader>

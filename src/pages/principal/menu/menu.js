@@ -19,12 +19,12 @@ export const MenuPrincipal = () => {
 
   return (
     
-    <div>
-    <Navbar color="light" light expand="md">
+    <div >
+    <Navbar color="light"  light expand="md" >
       <NavbarBrand href="/">Fila Gabriel</NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="mr-auto" navbar>
+        <Nav className="mr-auto" >
           <NavItem>
           <Link to='fila' className='nav-link'>Fila</Link>
           </NavItem>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom'
+import React, { useState} from 'react';
+import { Link, useHistory } from 'react-router-dom'
 
 
 import api from '../services/api';
@@ -44,12 +44,8 @@ export default function Show() {
 
         e.preventDefault()
         const data = {
-            nome_usuario,
+            nome_usuario, senha_usuario 
         }
-
-
-
-
 
 
         const res = await api.post(`usuario/create`, data);

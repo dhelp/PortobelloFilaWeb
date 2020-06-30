@@ -43,7 +43,7 @@ export default function Mesa() {
 
     const token = localStorage.getItem('app-token');
 
-    console.log(token);
+    //console.log(token);
 
     //console.log(listaMesa);
     const products = listaMesa;
@@ -130,11 +130,7 @@ export default function Mesa() {
 
 
     useEffect(() => {
-        api.get('mesa' ,{
-        headers: {
-            Authorization: `Bearer ${token}` 
-        }
-        }).then(
+        api.get('mesa').then(
             response => {
                 setaListaMesa(response.data)
                 //const rows = response.data

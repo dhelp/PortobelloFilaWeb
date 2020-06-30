@@ -18,3 +18,37 @@ input {
     padding: 0 10px;
    
 }
+
+
+.navbar {
+    background-color: #1ea2ca;
+    border-color: #09bef5;
+}
+.navbar .navbar-brand {
+    color: #DC1D1D;
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #00fff5;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: #2d89a5;
+}
+.navbar-default .navbar-toggle {
+    border-color: #1886a7;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d4f5ff;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: #2d89a5;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #2d89a5;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #00fff5;
+} 

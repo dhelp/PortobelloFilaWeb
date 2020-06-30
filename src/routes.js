@@ -1,6 +1,8 @@
 import React from 'react';
+import { useParams } from "react-router";
 import { BrowserRouter , Route, Switch} from 'react-router-dom';
 
+import index from './pages/principal/index'
 
 import Mesa from './pages/mesa/index'
 import MesaEdit from './pages/mesa/mesaedit'
@@ -17,7 +19,7 @@ import usuarioshow from './pages/usuario/show'
 
 import Fila from './pages/fila/index';
 
-import login from './pages/login/login';
+ import login from './pages/login/login';
 
 
 import auditoria from './pages/auditoria/index';
@@ -28,24 +30,25 @@ export default function Routes(){
     return(
         <BrowserRouter>
             <Switch>
+            <Route path='/login'   component={login} />
+            <PrivateRoute path="/" exact={true}  component={index} />
+            
+                <PrivateRoute path="/fila" exact={true}  component={Fila} /> */}
 
+                 <PrivateRoute path='/mesa' exact component={Mesa} />
+                 <PrivateRoute path='/mesa/create'  component={MesaCreate} />          
+                 <PrivateRoute path='/mesa/show/:id'  component={MesaEdit} />
 
-                <Route path="/fila" exact={true}  component={Fila} />
-
-                <Route path='/mesa' exact component={Mesa} />
-                <Route path='/mesa/create'  component={MesaCreate} />          
-                <Route path='/mesa/show'  component={MesaEdit} />
-
-                <Route path='/vendedor' exact={true} component={vendedor} />
-                <Route path='/vendedor/create'  component={vendedorcreate} />
-                <Route path='/vendedor/show'  component={vendedorshow} />
+                <PrivateRoute path='/vendedor' exact={true} component={vendedor} />
+                <PrivateRoute path='/vendedor/create'  component={vendedorcreate} />
+                <PrivateRoute path='/vendedor/show/:id'  component={vendedorshow} />
                 
 
-                <Route path='/usuario' exact={true}  component={usuario} />
-                <Route path='/usuario/create'  component={usuariocreate} />
-                <Route path='/usuario/show'  component={usuarioshow} />
+                <PrivateRoute path='/usuario' exact  component={usuario} />
+                <PrivateRoute path='/usuario/create'  component={usuariocreate} />
+                <PrivateRoute path='/usuario/show/:id'  component={usuarioshow} />
 
-                <Route path='/login' exact={true}   component={login} />
+                
 
                 <PrivateRoute path='/auditoria'  component={auditoria} />
                 

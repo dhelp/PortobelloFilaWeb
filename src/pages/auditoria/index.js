@@ -12,7 +12,6 @@ import {
 
 
 
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import './auditoriastyles.css';
 
 import api from '../services/api';

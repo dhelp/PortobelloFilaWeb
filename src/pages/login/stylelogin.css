@@ -1,21 +1,4 @@
 
-/* 
-.login {
-    margin: auto;
-    width: 80%;
-    background: #fff;
-    padding: 10px;
-  }
-
-
-
-  .login img {
-      margin-bottom: 15px;
-  } */
-
-
-  
-  
   /*//////////////////////////////////////////////////////////////////
   [ RESTYLE TAG ]*/
   
@@ -27,12 +10,10 @@
   
   body, html {
       height: 100%;
-      font-family: Ubuntu-Regular, sans-serif;
   }
   
   /*---------------------------------------------*/
   a {
-      font-family: Ubuntu-Regular;
       font-size: 14px;
       line-height: 1.7;
       color: #666666;

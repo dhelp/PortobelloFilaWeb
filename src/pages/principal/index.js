@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom'
+
 
 import {
     Container
@@ -13,15 +13,14 @@ export default function Principal() {
 
 
     return (
-        <Container className="content">
-            <div className="App">
-                <Route>
-                    <MenuPrincipal />
-                    <Switch>
-                    </Switch> 
-                </Route>
-            </div>
-        </Container>
+        
+         <Container className="content">
+             {/* <div className="App"> */}
+              
+                    <MenuPrincipal />                    
+              
+             {/* </div> */}
+         </Container>
 
 
     )
