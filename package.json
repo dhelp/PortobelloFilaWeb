@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "fomantic-ui": "^2.8.6",
+    "jsonwebtoken": "^8.5.1",
     "material-table": "^1.57.2",
     "moment": "^2.26.0",
     "react": "^16.13.1",
@@ -49,6 +50,5 @@
   "devDependencies": {
     "netlify-cli": "^2.54.0",
     "react-time-format": "0.0.5"
-  } 
+  }
 }
-

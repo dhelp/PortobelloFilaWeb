@@ -56,6 +56,7 @@ export default function Index() {
   const [n, setN] = useState([]);
   const [ttelefone, setTtelefone] = useState(0);
   const [somaatedimento, setSomaAtendimento] = useState(0);
+  const [count, setCount] = useState(1);
 
 
 
@@ -444,7 +445,6 @@ export default function Index() {
 
 
 
-
   return (
 
     <Container className="content">
@@ -470,13 +470,17 @@ export default function Index() {
 
           {listaFilaVendedor.map(fila => (
             <tr key={fila.id}>
+             
+              
+              
               <th >
-
-                {fila.id_status === 1 ? <Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> :
+                
+                {fila.id_status === 1 && fila.rnk===1 ? <Brightness1Icon style={{ color: yellow[500], fontSize: 25 }} /> :
+                fila.id_status === 1 ?  <Brightness1Icon style={{ color: green[500], fontSize: 25 }} /> :
                   fila.id_status === 2 ? <RecordVoiceOverIcon style={{ color: blue[500], fontSize: 25 }} /> :
                     fila.id_status === 3 ? <PhoneInTalkIcon style={{ color: '#FFC107', fontSize: 25 }} /> :
                       fila.id_status === 4 ? <HighlightOffIcon style={{ color: blue[500], fontSize: 25 }} /> :
-                        ''}
+                       ''}
                 {' '}
                 {fila.status}</th>
               <td>{fila.data_entrada}</td>
@@ -491,12 +495,12 @@ export default function Index() {
                 <Button id="inserefila" value={fila.id} outline size="sm" onClick={(e) => setSairDaFila({ nome: fila.nome_vendedor, id: fila.id, id_status: fila.id_status })}> <span><HighlightOffIcon style={{ color: red[500], fontSize: 25 }} /></span></Button>
                 {/* </div> */}
               </td>
-
+              
             </tr>
-
+                
 
           ))}
-
+        
 
         </tbody>
         <tfoot>
