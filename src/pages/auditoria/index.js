@@ -1,5 +1,7 @@
 import React ,{ useState, useEffect }from 'react';
-import { Link } from 'react-router-dom'
+import { Link ,useHistory} from 'react-router-dom'
+
+import { isTokenExpired } from "../services/auth"; 
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
@@ -19,9 +21,18 @@ import api from '../services/api';
 
 export default function Usuario() {
 
+    const history = useHistory();
+
     // const [mesa, setMesa] = useState('');
     // const [ramal, setRamal] = useState('');
     const [listaMesa, setaListaMesa] = useState([]);
+
+
+    const logged = isTokenExpired();
+    if(logged===false){
+      history.push('/login')
+    }
+
 
     //console.log(listaMesa);
     const products = listaMesa;

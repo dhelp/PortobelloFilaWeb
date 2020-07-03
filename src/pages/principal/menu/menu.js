@@ -27,6 +27,7 @@ export const MenuPrincipal = (props) => {
   }
 
   const user = localStorage.getItem('app-user');
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

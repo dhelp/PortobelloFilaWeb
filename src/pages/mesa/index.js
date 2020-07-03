@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import {
     Container
   } from 'reactstrap';
+
+  import { isTokenExpired } from "../services/auth"; 
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
@@ -35,6 +37,13 @@ import api from '../services/api';
 
 
 export default function Mesa() {
+    const history = useHistory();
+
+    const logged = isTokenExpired();
+    if(logged===false){
+      history.push('/login')
+    }
+
 
     // const [mesa, setMesa] = useState('');
     // const [ramal, setRamal] = useState('');

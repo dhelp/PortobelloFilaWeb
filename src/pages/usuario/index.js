@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link , useHistory} from 'react-router-dom'
 
+import { isTokenExpired } from "../services/auth"; 
 
 import BootstrapTable from 'react-bootstrap-table-next';
 
@@ -21,6 +22,13 @@ import api from '../services/api';
 
 export default function Usuario() {
  
+    const history = useHistory();
+
+    const logged = isTokenExpired();
+    if(logged===false){
+      history.push('/login')
+    }
+
 
     const [listaMesa, setaListaMesa] = useState([]);
 

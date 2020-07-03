@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 //import io from 'socket.io-client';
+
+import { isTokenExpired, getTokenUser } from "../services/auth"; 
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -38,6 +40,9 @@ import './stylefila.css';
 
 export default function Index() {
 
+
+  const history = useHistory();
+
   const [listaFilaVendedor, setListaFilaVendedor] = useState([]);
   const [listaSelectVendedor, setListaSelectVendedor] = useState([]);
   const [listaSelectMesa, setListaSelectMesa] = useState([]);
@@ -56,17 +61,24 @@ export default function Index() {
   const [n, setN] = useState([]);
   const [ttelefone, setTtelefone] = useState(0);
   const [somaatedimento, setSomaAtendimento] = useState(0);
-  const [count, setCount] = useState(1);
 
 
 
+  const logged = isTokenExpired();
+  if(logged===false){
+    history.push('/login')
+  }
 
+  
 
 
 
   async function insereFila(e) {
     e.preventDefault();
-    const data = { vendedor_id, mesa_id };
+
+   const userLogged = getTokenUser();
+
+    const data = { vendedor_id, mesa_id , userLogged};
 
 
 
@@ -83,7 +95,7 @@ export default function Index() {
 
       setModal(!modal);
 
-      const res = await api.post('fila/create', data);
+      const res = await api.post('fila/create',  data);
 
       if (res.status === 201) {
         review();
@@ -103,7 +115,10 @@ export default function Index() {
 
     const id = e;
 
-    const res = await api.delete(`fila/delete/${id}`);
+    const userLogged = getTokenUser();
+
+
+    const res = await api.delete(`fila/delete/${id}?userLogged=${userLogged}`);
 
     //console.log(res)
 
@@ -129,7 +144,9 @@ export default function Index() {
 
     const id = e;
 
-    const res = await api.put(`fila/ocupadotelefone/${id}`);
+    const userLogged = getTokenUser();
+
+    const res = await api.put(`fila/ocupadotelefone/${id}?userLogged=${userLogged}`);
 
     if (res.status === 204) {
 
@@ -155,7 +172,9 @@ export default function Index() {
 
     const id = e;
 
-    const res = await api.put(`fila/atendimento/${id}`);
+    const userLogged = getTokenUser();
+
+    const res = await api.put(`fila/atendimento/${id}?userLogged=${userLogged}`);
 
     if (res.status === 204) {
 
@@ -171,13 +190,19 @@ export default function Index() {
 
   async function disponivel(e) {
 
-    const id = e;
+    const id = e.id;
+    //1= atendimento
+    //2= retorno de orçamento
+    console.log(id);
+    console.log(e.id_retorno)
+
+    const userLogged = getTokenUser()
 
     const data = e.nome;
 
     //console.log(data);
 
-    const res = await api.put(`fila/disponivel/${id}`, data);
+    const res = await api.put(`fila/disponivel/${id}?userLogged=${userLogged}`, data);
 
     if (res.status === 204) {
 
@@ -412,10 +437,10 @@ export default function Index() {
 
   const toggleTipoAtendimento = (e) => {
 
-    //console.log(modalConfDelId);
+    console.log(modalConfDelId);
+    const id_retorno = e.id_retorno;
 
-
-    disponivel(modalConfDelId);
+    disponivel({id:modalConfDelId, id_retorno});
 
     setModalTipoAtendimento(!modalTipoAtendimento)
 
@@ -450,7 +475,7 @@ export default function Index() {
     <Container className="content">
 
 
-      {/* <Row> */}
+      <Row>
       {/* class="table-responsive" */}
       {/* <div  > */}
       {/* <Button onClick={() => aa()}>clique aqui {n}</Button> */}
@@ -522,11 +547,11 @@ export default function Index() {
       {/* </div> */}
 
 
-      {/* </Row> */}
-      {/* <Row> */}
-        <Link to="/"><Button color="primary">VOLTAR</Button></Link>
+      </Row>
+      <Row>
+        <Link to="/"><Button color="primary" style={{'marginTop': '10px','marginBottom': '20px'}}>VOLTAR</Button></Link>
 
-      {/* </Row> */}
+      </Row>
 
       <Modal isOpen={modal} fade={false} toggle={togleModalOff} >
         <ModalHeader toggle={togleModalOff}>ADICIONAR VENDEDOR(A) NA FILA</ModalHeader>

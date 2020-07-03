@@ -1,5 +1,7 @@
 import React ,{ useState, useEffect }from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+
+import { isTokenExpired } from "../services/auth"; 
 
 import {
     ButtonToggle ,
@@ -23,6 +25,11 @@ import api from '../services/api';
 
 
 export default function Vendedor() {
+    const history = useHistory();
+    const logged = isTokenExpired();
+    if(logged===false){
+      history.push('/login')
+    }
 
     // const [mesa, setMesa] = useState('');
     // const [ramal, setRamal] = useState('');
