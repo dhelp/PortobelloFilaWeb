@@ -193,8 +193,8 @@ export default function Index() {
     const id = e.id;
     //1= atendimento
     //2= retorno de orçamento
-    console.log(id);
-    console.log(e.id_retorno)
+    console.log('-----id>'+id);
+    console.log('-----id_retorno>'+ e.id_retorno)
 
     const userLogged = getTokenUser()
 
@@ -461,6 +461,7 @@ export default function Index() {
     //setModalTipoAtendimento(!modalTipoAtendimento)
     setModalConfDi(!modalConfDi)
     setModalConfDelNome(e.nome);
+    
     setModalConfDelId(e.id);
   }
 
@@ -634,7 +635,7 @@ export default function Index() {
           Deseja alterar o status do(a) vendedor(a) <strong>{modalConfDelNome}</strong> para <strong>'disponivel'</strong>?
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => disponivel(modalConfDelId)}>SIM</Button>{' '}
+          <Button color="success" onClick={() => disponivel({id:modalConfDelId})}>SIM</Button>{' '}
           <Button color="secondary" onClick={toggleDi}>NÃO</Button>
         </ModalFooter>
       </Modal>
