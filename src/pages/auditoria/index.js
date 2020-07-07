@@ -45,8 +45,20 @@ export default function Usuario() {
       text: 'DATA',
       sort: true
     }, {
+      dataField: 'status',
+      text: 'STATUS',
+      sort: true
+    }, {
       dataField: 'descricao',
       text: 'AÇÃO',
+      sort: true
+    }, {
+      dataField: 'retorno',
+      text: 'RETORNO',
+      sort: true
+    }, {
+      dataField: 'arquiteto',
+      text: 'ARQUITETO',
       sort: true
     }];
 

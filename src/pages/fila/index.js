@@ -13,9 +13,15 @@ import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ReplayIcon from '@material-ui/icons/Replay';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+
+import DomainIcon from '@material-ui/icons/Domain';
+import DomainDisabledIcon from '@material-ui/icons/DomainDisabled';
 // import EditIcon from '@material-ui/icons/Edit';
 // import CachedIcon from '@material-ui/icons/Cached';
-import { green, blue, red, yellow } from '@material-ui/core/colors';
+import { green, blue, red, yellow,purple , orange} from '@material-ui/core/colors';
+
+
 
 
 
@@ -41,6 +47,7 @@ import './stylefila.css';
 export default function Index() {
 
 
+
   const history = useHistory();
 
   const [listaFilaVendedor, setListaFilaVendedor] = useState([]);
@@ -56,11 +63,13 @@ export default function Index() {
   const [modalConfDi, setModalConfDi] = useState(false);
   const [modalConfDelNome, setModalConfDelNome] = useState(false);
   const [modalTipoAtendimento, setModalTipoAtendimento] = useState(false);
+  const [modalArquiteto, setModalArquiteto] = useState(false);
   const [modalConfDelId, setModalConfDelId] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
   const [n, setN] = useState([]);
   const [ttelefone, setTtelefone] = useState(0);
   const [somaatedimento, setSomaAtendimento] = useState(0);
+  const [tipoAtendimento, setTipoAtendimento] = useState();
 
 
 
@@ -198,7 +207,12 @@ export default function Index() {
 
     const userLogged = getTokenUser()
 
-    const data = e.nome;
+    const nome = e.nome;
+    const id_retorno = e.id_retorno;
+    const arquiteto = e.arquiteto;
+
+    console.log(arquiteto)
+    const data = {nome, id_retorno, arquiteto};
 
     //console.log(data);
 
@@ -432,17 +446,39 @@ export default function Index() {
     }
   }
 
+  const toggleArquiteto = (e) => {
 
+    console.log(modalConfDelId);
+    const arquiteto = e.arquiteto;
+    setTipoAtendimento(arquiteto)
+
+//COmentei
+    disponivel({id:modalConfDelId, id_retorno:tipoAtendimento, arquiteto});
+
+    //setModalTipoAtendimento(!modalTipoAtendimento)
+
+    setModalArquiteto(false);
+
+
+    // setModalConfDelNome(e.nome);
+    //setModalConfDelId(e.id);
+
+
+  }
 
 
   const toggleTipoAtendimento = (e) => {
 
     console.log(modalConfDelId);
     const id_retorno = e.id_retorno;
+    setTipoAtendimento(id_retorno)
 
-    disponivel({id:modalConfDelId, id_retorno});
+//COmentei
+    //disponivel({id:modalConfDelId, id_retorno});
 
     setModalTipoAtendimento(!modalTipoAtendimento)
+
+    setModalArquiteto(true);
 
 
     // setModalConfDelNome(e.nome);
@@ -658,7 +694,19 @@ export default function Index() {
           <div id='divmodalsetretorno'>
             <Button outline color="primary" onClick={() => toggleTipoAtendimento({ id_retorno: 1 })}><span><ThumbUpIcon style={{ color: blue[700], fontSize: 35 }} /></span>  ATENDIMENTO</Button>
             <Button outline color="warning" onClick={() => toggleTipoAtendimento({ id_retorno: 2 })} ><span><ReplayIcon style={{ color: yellow[900], fontSize: 35 }} /></span>RETORNO DE ORÇAMENTO</Button>
-          </div>
+          </div>         
+        </ModalBody>
+
+      </Modal>
+
+
+      <Modal isOpen={modalArquiteto} fade={false} >
+        <ModalHeader  >< GroupAddIcon style={{ color: purple[500], fontSize: 45 }} />  O atendimento foi <b>'com'</b> ou <b>'sem'</b> arquiteto(a):</ModalHeader>
+        <ModalBody>
+          <div id='divmodalsetretorno'>
+            <Button outline color="primary" onClick={() => toggleArquiteto({ arquiteto: 1 })}><span><DomainIcon style={{ fontSize: 35 }} /></span>  <b>COM</b> ARQUITETO(A)</Button>
+            <Button outline color="warning" onClick={() => toggleArquiteto({ arquiteto: 0 })} ><span><DomainDisabledIcon style={{ color: yellow[900], fontSize: 35 }} /></span> <b>SEM</b> ARQUITETO(A)</Button>
+          </div>         
         </ModalBody>
 
       </Modal>
