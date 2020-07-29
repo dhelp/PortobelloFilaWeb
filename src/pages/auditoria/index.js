@@ -190,7 +190,7 @@ export default function Usuario() {
                 <Col md={2}>
                   <FormGroup>
                     <Label for="dataDe">Data De</Label>
-                    <Input type="date" name="datade" id="dataDe" onChange={e => setaDataDe(e.target.value)} />
+                    <Input  type="date" name="datade" id="dataDe" onChange={e => setaDataDe(e.target.value)} />
                   </FormGroup>
                 </Col>
                 <Col md={2}>
@@ -231,15 +231,15 @@ export default function Usuario() {
 
                   <FormGroup>
                     <Label for="id_vendedor">Vendedor</Label>
-                    <Input style={{ 'width': '100%' }} type="select" name="id_vendedor" id="id_vendedor" onChange={e => setaIdVendedor(e.target.value)}>
-                      <option></option>
+                    <select className="ui medium clearable selection dropdown" style={{ 'width': '100%' }}  name="id_vendedor" id="id_vendedor" onChange={e => setaIdVendedor(e.target.value)}>
+                    <option value="">Selecione</option>
                       {listaVendedor.map(list =>
                         <option value={list.id}>{list.nome_vendedor}</option>
 
                       )
                       }
 
-                    </Input>
+                    </select>
 
                   </FormGroup>
 

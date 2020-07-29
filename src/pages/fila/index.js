@@ -20,7 +20,10 @@ import DomainDisabledIcon from '@material-ui/icons/DomainDisabled';
 
 import { green, blue, red, yellow,purple , orange} from '@material-ui/core/colors';
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
+import AlarmIcon from '@material-ui/icons/Alarm';
+import IconButton from '@material-ui/core/IconButton';
 
 
 
@@ -69,6 +72,10 @@ export default function Index() {
   const [ttelefone, setTtelefone] = useState(0);
   const [somaatedimento, setSomaAtendimento] = useState(0);
   const [tipoAtendimento, setTipoAtendimento] = useState();
+  const [idFila, setIdFila] = useState();
+
+  const [modalAlteraVendedora, setAlteraVendedora] = useState(false);
+
 
 
 
@@ -501,8 +508,57 @@ export default function Index() {
   }
 
 
+  
+  const togleAlteraVendedora = async (e) =>  {
 
+    setVendedor_id(0);
 
+    await api.get('listavendedorfila').then(
+      response => {
+        setListaSelectVendedor(response.data)
+
+      }
+    )
+    setIdFila(e.id);
+    setAlteraVendedora(!modalAlteraVendedora)
+    
+  }
+
+  async function alteraVendedorAtendimento(e) {
+
+   //e.preventDefault();
+    //alert('teste')
+    const id = idFila;
+
+    //console.log(vendedor_id);
+  
+    if(vendedor_id == '0' ){
+    setMsgInfo('Selecione um(a) vendedor(a)');
+    toggleInfo()
+  }else{
+    const userLogged = getTokenUser()
+
+    const data = { vendedor_id, id , userLogged};
+ 
+
+    
+
+    
+
+    const res = await api.put(`fila/atendimentoalteravendedor/${id}?userLogged=${userLogged}`, data);
+
+    if (res.status === 204) {
+
+      review();
+      // console.log(res.status);
+      //togleAlteraVendedora()
+      setAlteraVendedora(!modalAlteraVendedora)
+
+    } else if (res.status === 200) {
+      alert(res.data.error);
+    }
+  }
+  }
 
 
 
@@ -545,7 +601,7 @@ export default function Index() {
                 {' '}
                 {fila.status}</th>
               <td>{fila.data_entrada}</td>
-              <td>{fila.nome_vendedor}</td>
+              <td>{fila.nome_vendedor} {fila.id_status === 2 ? <IconButton  style={{  padding: 0  }} color="secondary" aria-label="add an alarm" onClick={(e) => togleAlteraVendedora({id: fila.id})}><EditOutlinedIcon  /></IconButton>  : ''} </td>
               <td>{fila.ramal}</td>
               <td style={{ 'display': 'flex', 'justifyContent': 'space-around' }}>
                 {/* <div id="mmacao"> */}
@@ -708,6 +764,35 @@ export default function Index() {
           </div>         
         </ModalBody>
 
+      </Modal>
+
+
+
+      <Modal isOpen={modalAlteraVendedora} fade={false} toggle={togleAlteraVendedora} >
+        <ModalHeader toggle={togleAlteraVendedora}>ALTERA VENDEDOR(A) EM ATENDIMENTO</ModalHeader>
+        <ModalBody>
+          <Form>
+
+            <FormGroup>
+              <Label for="selectVendedor">Informe o novo vendendor para esse atendimento</Label>
+              <Input type="select" name="selectVendedor" id="selectVendedor" onChange={e => setVendedor_id(e.target.value)}>
+                <option></option>
+                {listaSelectVendedor.map(list =>
+                  <option value={list.id}>{list.nome_vendedor}</option>
+
+                )
+                }
+
+              </Input>
+            </FormGroup>
+
+           
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="success" onClick={(e)=>alteraVendedorAtendimento()}>SALVAR</Button>
+          <Button color="danger" onClick={togleAlteraVendedora}>CANCELAR</Button>
+        </ModalFooter>
       </Modal>
 
 
