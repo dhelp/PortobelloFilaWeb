@@ -513,7 +513,7 @@ export default function Index() {
 
     setVendedor_id(0);
 
-    await api.get('listavendedorfila').then(
+    await api.get('listavendedortroca').then(
       response => {
         setListaSelectVendedor(response.data)
 
