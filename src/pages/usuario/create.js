@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
 
@@ -6,9 +6,9 @@ import api from '../services/api';
 
 import {
     Container
-  } from 'reactstrap';
+} from 'reactstrap';
 
-  import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -23,6 +23,9 @@ export default function Show() {
 
     const [nome_usuario, setNome_usuario] = useState([]);
     const [senha_usuario, setSenha_usuario] = useState([]);
+    const [id_tipo, setid_tipo] = useState([]);
+
+    const [usuario_tipo, setUsuario_tipo] = useState([]);
 
 
     // useEffect(() => {
@@ -39,12 +42,21 @@ export default function Show() {
     //     fetchData();
     // }, []);
 
+    useEffect(() => {
+        api.get('usuariotipo').then(
+            response => {
+                setUsuario_tipo(response.data)
+                //const rows = response.data
+            }
+        )
+    }, [])
+
 
     async function handleEdit(e) {
 
         e.preventDefault()
         const data = {
-            nome_usuario, senha_usuario 
+            nome_usuario, senha_usuario, id_tipo
         }
 
 
@@ -73,7 +85,7 @@ export default function Show() {
 
                     <Col>
 
-                        
+
                         <Form.Group controlId="formGroupMesa">
                             <Form.Label>NOME USUÁRIO(A)</Form.Label>
                             <Form.Control
@@ -83,8 +95,25 @@ export default function Show() {
                                 defaultValue={nome_usuario}
                                 onChange={e => setNome_usuario(e.target.value)}
                             />
-                            
+
                         </Form.Group>
+
+                        <Form.Group controlId="formGroupMesa">
+                            <Form.Label>TIPO</Form.Label>
+                            <select id="id_tipo" name="id_tipo" class="form-control" onChange={e => setid_tipo(e.target.value)} >
+
+                                <option></option>
+                                {usuario_tipo.map(list =>
+                                    <option value={list.id}>{list.tipo}</option>
+
+                                )
+                                }
+
+                            </select>
+
+                        </Form.Group>
+
+
                         <Form.Group controlId="formGroupMesa">
                             <Form.Label>SENHA</Form.Label>
                             <Form.Control
@@ -94,9 +123,9 @@ export default function Show() {
                                 defaultValue={senha_usuario}
                                 onChange={e => setSenha_usuario(e.target.value)}
                             />
-                            
+
                         </Form.Group>
-                        
+
 
 
 

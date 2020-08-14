@@ -67,6 +67,10 @@ export default function Usuario() {
         dataField: 'nome_usuario',
         text: 'NOME USUÁRIO',
         sort: true
+    }, {
+        dataField: 'tipo',
+        text: 'TIPO',
+        sort: true
     }];
 
 

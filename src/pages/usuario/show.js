@@ -20,6 +20,8 @@ export default function Show() {
 
     const [idUsuario, setIdUsuario] = useState(id);
     const [nome_usuario, setNome_usuario] = useState([]);
+    const [tipo_usuario, setTipo_usuario] = useState([]);
+    const [usuario_tipo, setUsuario_tipo] = useState([]);
 
 
     useEffect(() => {
@@ -30,12 +32,20 @@ export default function Show() {
             
             setIdUsuario(result.data.id)
             setNome_usuario(result.data.nome_usuario)
-
+            setTipo_usuario(result.data.usuario_tipo_id)
 
         };
         fetchData();
     }, []);
 
+    useEffect(() => {
+        api.get('usuariotipo').then(
+            response => {
+                setUsuario_tipo(response.data)
+                //const rows = response.data
+            }
+        )
+    }, [])
 
     async function handleEdit(e) {
 
@@ -43,6 +53,7 @@ export default function Show() {
         const data = {
             id: idUsuario,
             nome_usuario,
+            id_tipo: tipo_usuario
 
         }
         
@@ -86,7 +97,8 @@ export default function Show() {
                                 autoComplete="new-password"
                             />
                         </Form.Group>
-                        <Form.Group controlId="formGroupMesa">
+
+                        <Form.Group controlId="formGroupID">
                             <Form.Label>NOME USUÁRIO</Form.Label>
                             <Form.Control
                                 type="text"
@@ -96,7 +108,20 @@ export default function Show() {
                                 onChange={e => setNome_usuario(e.target.value)}
                             />
                         </Form.Group>
+                        <Form.Group controlId="formGroupMesa">
+                            <Form.Label>TIPO</Form.Label>
+                            <select id="tipo_usuario" name="tipo_usuario" class="form-control" onChange={e => setTipo_usuario(e.target.value)}  value={tipo_usuario} >
 
+                                
+                                {usuario_tipo.map(list =>
+                                    <option value={list.id}>{list.tipo}</option>
+
+                                )
+                                }
+
+                            </select>
+
+                        </Form.Group>
 
 
                         <Form.Group controlId="formGroupButton">
