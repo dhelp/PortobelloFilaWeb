@@ -12,7 +12,7 @@
     "bootstrap": "^4.5.0",
     "file-saver": "^2.0.2",
     "fomantic-ui": "^2.8.6",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "material-table": "^1.57.2",
     "moment": "^2.26.0",
     "react": "^16.13.1",
